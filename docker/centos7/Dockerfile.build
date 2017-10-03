@@ -1,7 +1,7 @@
 # multi-stage build
 # use pbsbase image as builder
 # build script will be triggered
-FROM pbspro/pbsbase:centos7 AS builder
+FROM minghuiliu/pbsbase:centos7 AS builder
 # get latest PBS Pro source code
 RUN git clone https://github.com/pbspro/pbspro.git /src/pbspro && \
     bash /src/pbspro/docker/centos7/build.sh
