@@ -14,3 +14,4 @@ LABEL description="PBS Professional Open Source"
 COPY --from=builder /root/rpmbuild/RPMS/x86_64/pbspro-server-*.rpm .
 # install pbspro
 RUN yum install -y pbspro-server-*.rpm
+# meaningless change
