@@ -235,7 +235,7 @@ if sleeptime > 0:
             '#PBS -S /bin/bash\n' \
             'sync\n' \
             'sleep 4\n' \
-            'python - 80 10 10 <<EOF\n' \
+            'python - 80 10 20 <<EOF\n' \
             '%s\nEOF\n' % self.eatmem_script
         self.eatmem_job2 = \
             '#PBS -joe\n' \
@@ -1823,12 +1823,13 @@ if %s e.job.in_ms_mom():
         jid = self.server.submit(j)
         a = {'job_state': 'R'}
         self.server.expect(JOB, a, jid)
-        self.server.status(JOB, ATTR_o, jid)
-        o = j.attributes[ATTR_o]
-        self.tempfile.append(o)
         # mem and vmem limit will both be set, and either could be detected
         self.mom.log_match('%s;Cgroup mem(ory|sw) limit exceeded' % jid,
                            regexp=True)
+        self.server.status(JOB, ATTR_o, jid)
+        o = j.attributes[ATTR_o]
+        self.tempfile.append(o)
+
 
     def test_cgroup_enforce_memsw(self):
         """
