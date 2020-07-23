@@ -140,54 +140,27 @@ def checkModule(modname):
         return wrapper
     return decorated
 
+def momIsCray(self):
+    return self.mom.is_cray()
 
-def skipOnCray(function):
-    """
-    Decorator to skip a test on a ``Cray`` system
-    """
-
-    def wrapper(self, *args, **kwargs):
-        if self.mom.is_cray():
-            self.skipTest(reason='capability not supported on Cray')
-        else:
-            function(self, *args, **kwargs)
-    wrapper.__doc__ = function.__doc__
-    wrapper.__name__ = function.__name__
-    return wrapper
+skipOnCray = unittest.skipIf(momIsCray, 'capability not supported on Cray')
 
 
-def skipOnShasta(function):
-    """
-    Decorator to skip a test on a ``Cray Shasta`` system
-    """
+def momIsShasta(self):
+    return self.mom.is_shasta()
 
-    def wrapper(self, *args, **kwargs):
-        if self.mom.is_shasta():
-            self.skipTest(reason='capability not supported on Cray Shasta')
-        else:
-            function(self, *args, **kwargs)
-    wrapper.__doc__ = function.__doc__
-    wrapper.__name__ = function.__name__
-    return wrapper
+skipOnShasta = unittest.skipIf(momIsShasta,\
+    'capability not supported on Cray Shasta')
 
 
-def skipOnCpuSet(function):
-    """
-    Decorator to skip a test on a cgroup cpuset system
-    """
+def anyMomIsCpuSet(self):
+    for mom in self.moms.values():
+        if mom.is_cpuset_mom():
+            return True
+    return False
 
-    def wrapper(self, *args, **kwargs):
-        for mom in self.moms.values():
-            if mom.is_cpuset_mom():
-                msg = 'capability not supported on cgroup cpuset system: ' +\
-                      mom.shortname
-                self.skipTest(reason=msg)
-                break
-        else:
-            function(self, *args, **kwargs)
-    wrapper.__doc__ = function.__doc__
-    wrapper.__name__ = function.__name__
-    return wrapper
+skipOnCpuSet = unittest.skipIf(anyMomIsCpuSet,\
+    'capability not supported on cgroup cpuset system')
 
 
 def requirements(*args, **kwargs):
