@@ -94,21 +94,7 @@ default_requirements = {
     'no_comm_on_mom': True
 }
 
-
-def skip(reason="Skipped test execution"):
-    """
-    Unconditionally skip a test.
-
-    :param reason: Reason for the skip
-    :type reason: str or None
-    """
-    skip_flag = True
-
-    def wrapper(test_item):
-        test_item.__unittest_skip__ = skip_flag
-        test_item.__unittest_skip_why__ = reason
-        return test_item
-    return wrapper
+skip = unittest.skip
 
 
 def timeout(val):
@@ -122,23 +108,15 @@ def timeout(val):
 
 
 def checkModule(modname):
-    """
-    Decorator to check if named module is available on the system
-    and if not skip the test
-    """
-    def decorated(function):
-        def wrapper(self, *args, **kwargs):
-            import imp
-            try:
-                imp.find_module(modname)
-            except ImportError:
-                self.skipTest(reason='Module unavailable ' + modname)
-            else:
-                function(self, *args, **kwargs)
-        wrapper.__doc__ = function.__doc__
-        wrapper.__name__ = function.__name__
-        return wrapper
-    return decorated
+    def wrapper(func):
+        return func 
+    import imp
+    try:
+        imp.find_module(modname)
+    except ImportError:
+        return unittest.skip(func, reason='Module unavailable')
+    return wrapper
+
 
 def momIsCray(self):
     return self.mom.is_cray()
