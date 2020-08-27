@@ -1,0 +1,2 @@
+add_subdirectory(Libattr)
+add_subdirectory(Liblog)
