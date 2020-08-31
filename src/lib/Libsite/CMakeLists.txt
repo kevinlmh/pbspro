@@ -1,0 +1,17 @@
+add_library(site
+  site_alt_rte.c
+  site_mom_chu.c
+  site_mom_jst.c
+  site_allow_u.c
+  site_check_u.c
+  site_map_usr.c
+  site_mom_ckp.c
+)
+target_include_directories(site
+  PRIVATE
+    ${CMAKE_SOURCE_DIR}/src/include
+    ${CMAKE_BINARY_DIR}/src/include
+    ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_BINARY_DIR}/include
+    ${CMAKE_SOURCE_DIR}/src/resmom/${PBS_MACH}
+)

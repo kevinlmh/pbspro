@@ -52,7 +52,7 @@
  * 	X_handler()
  */
 #include <pbs_config.h>
-#include <pbs_ifl.h>
+#include "pbs_ifl.h"
 #include "cmds.h"
 #include "pbs_version.h"
 

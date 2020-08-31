@@ -66,7 +66,7 @@
 #include <errno.h>
 #include <assert.h>
 #include <pbs_error.h>
-#include <pbs_ifl.h>
+#include "pbs_ifl.h"
 #include <log.h>
 #include "queue_info.h"
 #include "job_info.h"

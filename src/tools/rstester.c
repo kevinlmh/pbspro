@@ -51,7 +51,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <pbs_ifl.h>
+#include "pbs_ifl.h"
 #include "attribute.h"
 
 /* prototypes */

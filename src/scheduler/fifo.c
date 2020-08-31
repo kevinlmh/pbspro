@@ -83,7 +83,7 @@
 #include <unistd.h>
 #include <libutil.h>
 #include <pbs_error.h>
-#include <pbs_ifl.h>
+#include "pbs_ifl.h"
 #include <sched_cmds.h>
 #include <time.h>
 #include <log.h>

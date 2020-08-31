@@ -14,6 +14,10 @@ project(openpbs VERSION ${PBS_VERSION} LANGUAGES C)
 
 # need these packages to build
 find_package(Python3 COMPONENTS Interpreter Development REQUIRED)
+find_package(SWIG REQUIRED)
+find_package(PostgreSQL REQUIRED)
+find_package(EXPAT REQUIRED)
+find_package(TCL REQUIRED)
 
 # add the src subdirectory
 add_subdirectory(include)

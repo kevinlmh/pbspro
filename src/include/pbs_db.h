@@ -56,7 +56,7 @@
 #ifndef _PBS_DB_H
 #define	_PBS_DB_H
 
-#include <pbs_ifl.h>
+#include "pbs_ifl.h"
 #include <sys/types.h>
 #include <stdlib.h>
 #include <string.h>

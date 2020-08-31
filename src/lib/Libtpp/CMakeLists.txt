@@ -1,0 +1,16 @@
+add_library(tpp
+  tpp_internal.h
+  tpp_client.c
+  tpp_em.c
+  tpp_platform.c
+  tpp_router.c
+  tpp_transport.c
+  tpp_util.c
+)
+target_include_directories(tpp
+  PRIVATE
+    ${CMAKE_SOURCE_DIR}/src/include
+    ${CMAKE_BINARY_DIR}/src/include
+    ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_BINARY_DIR}/include
+)

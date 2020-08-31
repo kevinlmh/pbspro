@@ -47,7 +47,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <netdb.h>
-#include <pbs_ifl.h>
+#include "pbs_ifl.h"
 #include <pwd.h>
 #include "pbs_internal.h"
 #include <limits.h>

@@ -1,0 +1,13 @@
+add_library(net
+  get_hostaddr.c
+  net_client.c
+  net_server.c
+  net_set_clse.c
+  port_forwarding.c
+  hnls.c)
+target_include_directories(net
+  PRIVATE
+    ${CMAKE_SOURCE_DIR}/src/include
+    ${CMAKE_BINARY_DIR}/src/include
+    ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_BINARY_DIR}/include)

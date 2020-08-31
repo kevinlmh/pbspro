@@ -74,7 +74,7 @@
 #include <unistd.h>
 #include <libpbs.h>
 #include <limits.h>
-#include <pbs_ifl.h>
+#include "pbs_ifl.h"
 #include <pbs_internal.h>
 #include <pbs_sched.h>
 #include <pbs_share.h>

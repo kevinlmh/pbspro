@@ -98,7 +98,7 @@ pbs_rescquery, avail, totpool, usepool - query resource availability
 .SH SYNOPSIS
 #include <pbs_error.h>
 .br
-#include <pbs_ifl.h>
+#include "pbs_ifl.h"
 .sp
 .ft 3
 .nf

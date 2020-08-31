@@ -49,7 +49,7 @@
 #include <string.h>
 #include <strings.h>
 #include <sys/types.h>
-#include <pbs_ifl.h>
+#include "pbs_ifl.h"
 #include "log.h"
 #include "list_link.h"
 #include "attribute.h"

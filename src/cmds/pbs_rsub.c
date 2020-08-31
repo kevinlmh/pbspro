@@ -48,7 +48,7 @@
 #include <sys/types.h>
 #include <sys/time.h>
 #include <errno.h>
-#include <pbs_ifl.h>
+#include "pbs_ifl.h"
 #include "cmds.h"
 #include "net_connect.h"
 #include "attribute.h"

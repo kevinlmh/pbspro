@@ -51,7 +51,7 @@
 #include <ctype.h>
 #include <errno.h>
 #include <pbs_error.h>
-#include <pbs_ifl.h>
+#include "pbs_ifl.h"
 #include <regex.h>
 #include <sched_cmds.h>
 #include <time.h>

@@ -126,7 +126,7 @@
 #include <math.h>
 #include <errno.h>
 #include <time.h>
-#include <pbs_ifl.h>
+#include "pbs_ifl.h"
 #include <log.h>
 #include <grunt.h>
 #include <libutil.h>

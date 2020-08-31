@@ -57,7 +57,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <pbs_error.h>
-#include <pbs_ifl.h>
+#include "pbs_ifl.h"
 #include <log.h>
 #include "state_count.h"
 #include "constant.h"

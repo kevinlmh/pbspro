@@ -54,7 +54,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <libpbs.h>
-#include <pbs_ifl.h>
+#include "pbs_ifl.h"
 #include "data_types.h"
 #include "constant.h"
 #include "config.h"

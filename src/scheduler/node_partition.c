@@ -74,7 +74,7 @@
 #include "errno.h"
 
 #include <log.h>
-#include <pbs_ifl.h>
+#include "pbs_ifl.h"
 #include <pbs_internal.h>
 #include "config.h"
 #include "constant.h"

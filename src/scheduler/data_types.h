@@ -57,7 +57,7 @@ extern "C" {
 #endif
 
 #include <time.h>
-#include <pbs_ifl.h>
+#include "pbs_ifl.h"
 #include <libutil.h>
 #include "constant.h"
 #include "config.h"

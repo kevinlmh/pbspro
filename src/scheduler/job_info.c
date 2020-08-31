@@ -99,7 +99,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <math.h>
-#include <pbs_ifl.h>
+#include "pbs_ifl.h"
 #include <log.h>
 #include <libutil.h>
 #include <pbs_share.h>

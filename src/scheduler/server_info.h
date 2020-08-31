@@ -43,7 +43,7 @@
 extern "C" {
 #endif
 
-#include <pbs_ifl.h>
+#include "pbs_ifl.h"
 #include "state_count.h"
 #include "data_types.h"
 #include "constant.h"

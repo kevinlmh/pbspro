@@ -66,7 +66,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
-#include <pbs_ifl.h>
+#include "pbs_ifl.h"
 #include <log.h>
 #include <libutil.h>
 

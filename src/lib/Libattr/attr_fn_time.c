@@ -47,7 +47,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
-#include <pbs_ifl.h>
+#include "pbs_ifl.h"
 #include "list_link.h"
 #include "attribute.h"
 #include "pbs_error.h"

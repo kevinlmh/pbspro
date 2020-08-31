@@ -56,7 +56,7 @@
 #include <memory.h>
 #include <stdlib.h>
 #include <libpbs.h>
-#include <pbs_ifl.h>
+#include "pbs_ifl.h"
 #include <errno.h>
 #include <string.h>
 #include <list_link.h>

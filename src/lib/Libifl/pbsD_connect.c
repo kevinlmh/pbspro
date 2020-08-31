@@ -63,7 +63,7 @@
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <arpa/inet.h>
-#include <pbs_ifl.h>
+#include "pbs_ifl.h"
 #include "libpbs.h"
 #include "net_connect.h"
 #include "dis.h"

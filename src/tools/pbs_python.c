@@ -65,7 +65,7 @@
 
 #include <Python.h>
 
-#include <pbs_ifl.h>
+#include "pbs_ifl.h"
 #include <pbs_internal.h>
 #include <pbs_version.h>
 

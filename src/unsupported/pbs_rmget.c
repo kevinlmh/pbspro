@@ -43,7 +43,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <pbs_ifl.h>
+#include "pbs_ifl.h"
 #include <rm.h>
 #include "pbs_internal.h"
 #include "tpp.h"

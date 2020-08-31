@@ -50,7 +50,7 @@
 #include <string.h>
 #include <errno.h>
 #include <math.h>
-#include <pbs_ifl.h>
+#include "pbs_ifl.h"
 #include <pbs_internal.h>
 #include <pbs_error.h>
 #include <log.h>

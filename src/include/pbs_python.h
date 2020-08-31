@@ -48,7 +48,7 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
-#include <pbs_ifl.h>
+#include "pbs_ifl.h"
 #include <pbs_config.h>
 #include "pbs_internal.h"
 #include <log.h>
