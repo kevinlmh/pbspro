@@ -240,7 +240,7 @@ set(LIBPBS_SOURCES
 	ecl_resc_def_all.c
 	ecl_resv_attr_def.c
 )
-add_library(pbs SHARED ${LIBPBS_SOURCES})
+add_library(pbs STATIC ${LIBPBS_SOURCES})
 target_link_libraries(pbs PRIVATE crypto pthread)
 target_include_directories(pbs
   PRIVATE

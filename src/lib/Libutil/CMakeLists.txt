@@ -24,8 +24,7 @@ target_include_directories(util
     # TODO:
     # @libical_inc@ \
     # @KRB5_CFLAGS@ \
-    # @libundolr_inc@
-)
+    # @libundolr_inc@)
 
 # TODO:
 # if UNDOLR_ENABLED

@@ -1,50 +1,91 @@
 # add subdirectories
-add_subdirectory(scripts)
+# add_subdirectory(scripts)
+
+# CMAKETODO: fix find socket lib
+set(COMMON_LIBS
+  ${CMAKE_BINARY_DIR}/src/lib/Libpbs/libpbs.a
+  ${CMAKE_BINARY_DIR}/src/lib/Libnet/libnet.a
+  ${CMAKE_BINARY_DIR}/src/lib/Libsec/libsec.a
+  ${CMAKE_BINARY_DIR}/src/lib/Libutil/libutil.a
+    pthread dl nsl)
+set(COMMON_SOURCES ${CMAKE_SOURCE_DIR}/src/lib/Libcmds/cmds_common.c)
 
 # add executables
+function(add_cmd name)
+  add_executable(${name} ${name}.c ${COMMON_SOURCES})
+  target_include_directories(${name}
+    PRIVATE
+    ${CMAKE_SOURCE_DIR}/src/include
+    ${CMAKE_BINARY_DIR}/src/include
+    ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_BINARY_DIR}/include)
+  target_link_libraries(${name} ${COMMON_LIBS})
+endfunction()
+
 # bin programs
-add_executable(pbsdsh pbsdsh.c)
-add_executable(pbsnodes pbsnodes.c)
-add_executable(pbs_attach pbs_attach.c)
-add_executable(pbs_tmrsh pbs_tmrsh.c)
-add_executable(pbs_ralter pbs_ralter.c)
-add_executable(pbs_rdel pbs_rdel.c)
-add_executable(pbs_rstat pbs_rstat.c)
-add_executable(pbs_rsub pbs_rsub.c)
-add_executable(pbs_release_nodes pbs_release_nodes.c)
-add_executable(qalter qalter.c)
-add_executable(qdel qdel.c)
-add_executable(qdisable qdisable.c)
-add_executable(qenable qenable.c)
-add_executable(qhold qhold.c)
-add_executable(qmgr qmgr.c)
-add_executable(qmove qmove.c)
-add_executable(qorder qorder.c)
-add_executable(qmsg qmsg.c)
-add_executable(qrerun qrerun.c)
-add_executable(qrls qrls.c)
-add_executable(qrun qrun.c)
-add_executable(qselect qselect.c)
-add_executable(qsig qsig.c)
-add_executable(qstat qstat.c)
-add_executable(qstart qstart.c)
-add_executable(qstop qstop.c)
-add_executable(qsub qsub.c)
-add_executable(qterm qterm.c)
+add_cmd(pbsdsh pbsdsh.c)
+add_cmd(pbsnodes pbsnodes.c)
+add_cmd(pbs_attach pbs_attach.c)
+add_cmd(pbs_tmrsh pbs_tmrsh.c)
+add_cmd(pbs_ralter pbs_ralter.c)
+add_cmd(pbs_rdel pbs_rdel.c)
+add_cmd(pbs_rstat pbs_rstat.c)
+add_cmd(pbs_rsub pbs_rsub.c)
+add_cmd(pbs_release_nodes pbs_release_nodes.c)
+add_cmd(qalter qalter.c)
+add_cmd(qdel qdel.c)
+add_cmd(qdisable qdisable.c)
+add_cmd(qenable qenable.c)
+add_cmd(qhold qhold.c)
+add_cmd(qmove qmove.c)
+add_cmd(qorder qorder.c)
+add_cmd(qmsg qmsg.c)
+add_cmd(qrerun qrerun.c)
+add_cmd(qrls qrls.c)
+add_cmd(qrun qrun.c)
+add_cmd(qselect qselect.c)
+add_cmd(qsig qsig.c)
+add_cmd(qstat qstat.c)
+add_cmd(qstart qstart.c)
+add_cmd(qstop qstop.c)
+add_cmd(qsub qsub.c)
+add_cmd(qterm qterm.c)
+# CMAKETODO: need @editline_lib@
+# add_executable(qmgr qmgr.c)
 
-# dis bin programs
-add_executable(mpiexec mpiexec.c)
-add_executable(nqs2pbs nqs2pbs.c)
-add_executable(pbs_lamboot pbs_lamboot.c)
-add_executable(pbs_mpihp pbs_mpihp.c)
-add_executable(pbs_mpiam pbs_mpilam.c)
-add_executable(pbs_mpirun pbs_mpirun.c)
-add_executable(pbs_remsh pbs_remsh.c)
-add_executable(pbsrun pbsrun.c)
-add_executable(pbsrun_unwrap pbsrun_unwrap.c)
-add_executable(pbsrun_wrap pbsrun_wrap.c)
 
-# sbin programs
-add_executable(pbs_dataservice pbs_dataservice.c)
+# # sbin programs
 add_executable(pbs_demux pbs_demux.c)
-add_executable(pbs_ds_password pbs_ds_password.c)
+target_include_directories(pbs_demux
+  PRIVATE
+  ${CMAKE_SOURCE_DIR}/src/include
+  ${CMAKE_BINARY_DIR}/src/include
+  ${CMAKE_SOURCE_DIR}/include
+  ${CMAKE_BINARY_DIR}/include)
+target_link_libraries(pbs_demux ${COMMON_LIBS})
+
+# add_executable(pbs_ds_password pbs_ds_password.c)
+
+# CMAKETODO: this is hard, need to link to extra stuff
+# add_executable(pbs_dataservice pbs_dataservice.c ${COMMON_SOURCES})
+# target_include_directories(pbs_dataservice
+#   PRIVATE
+#   ${CMAKE_SOURCE_DIR}/src/include
+#   ${CMAKE_BINARY_DIR}/src/include
+#   ${CMAKE_SOURCE_DIR}/include
+#   ${CMAKE_BINARY_DIR}/include)
+# target_link_libraries(pbs_dataservice ${COMMON_LIBS})
+
+
+# dist bin programs
+# these do not need to compile, only configure and install
+configure_file(mpiexec.in mpiexec @ONLY)
+configure_file(nqs2pbs.in nqs2pbs @ONLY)
+configure_file(pbs_lamboot.in pbs_lamboot @ONLY)
+configure_file(pbs_mpihp.in pbs_mpihp @ONLY)
+configure_file(pbs_mpilam.in pbs_mpiam @ONLY)
+configure_file(pbs_mpirun.in pbs_mpirun @ONLY)
+configure_file(pbs_remsh.in pbs_remsh @ONLY)
+configure_file(pbsrun.in pbsrun @ONLY)
+configure_file(pbsrun_unwrap.in pbsrun_unwrap @ONLY)
+configure_file(pbsrun_wrap.in pbsrun_wrap @ONLY)
