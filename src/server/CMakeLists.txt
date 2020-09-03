@@ -98,8 +98,13 @@ target_link_libraries(pbs_server_bin
   ${ZLIB_LIBRARIES}
   ${Python3_LIBRARIES}
   Threads::Threads
+  # -L/usr/lib64
   ssl
   crypto
   dl
-  m)
+  m
+  util
+  # -Xlinker
+  # -export-dynamic
+  )
   target_compile_definitions(pbs_server_bin PRIVATE PYTHON)
