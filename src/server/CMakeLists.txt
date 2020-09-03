@@ -1,0 +1,105 @@
+set(SERVER_SOURCES
+  accounting.c
+  array_func.c
+  attr_recov.c
+  attr_recov_db.c
+  checkkey.c
+  dis_read.c
+  failover.c
+  geteusernam.c
+  hook_func.c
+  issue_request.c
+  job_func.c
+  job_recov_db.c
+  job_route.c
+  license_client.c
+  mom_info.c
+  node_func.c
+  node_manager.c
+  node_recov_db.c
+  pbs_db_func.c
+  pbsd_init.c
+  pbsd_main.c
+  process_request.c
+  queue_func.c
+  queue_recov_db.c
+  reply_send.c
+  req_delete.c
+  req_getcred.c
+  req_holdjob.c
+  req_jobobit.c
+  req_locate.c
+  req_manager.c
+  req_message.c
+  req_modify.c
+  req_preemptjob.c
+  req_movejob.c
+  req_quejob.c
+  req_register.c
+  req_rerun.c
+  req_rescq.c
+  req_runjob.c
+  req_select.c
+  req_shutdown.c
+  req_signal.c
+  req_stat.c
+  req_track.c
+  req_cred.c
+  resc_attr.c
+  run_sched.c
+  sched_func.c
+  setup_resc.c
+  stat_job.c
+  svr_attr.c
+  svr_chk_owner.c
+  svr_connect.c
+  svr_func.c
+  svr_jobfunc.c
+  svr_mail.c
+  svr_movejob.c
+  svr_recov_db.c
+  svr_resccost.c
+  svr_credfunc.c
+  user_func.c
+  vnparse.c)
+
+add_executable(pbs_server_bin ${SERVER_SOURCES})
+target_include_directories(pbs_server_bin
+  PRIVATE
+    ${CMAKE_SOURCE_DIR}/src/include
+    ${CMAKE_BINARY_DIR}/src/include
+    ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_BINARY_DIR}/include
+    ${PostgreSQL_INCLUDE_DIRS}
+    ${EXPAT_INCLUDE_DIRS}
+    ${Ical_INCLUDE_DIR}
+    ${ZLIB_INCLUDE_DIRS}
+    ${Python3_INCLUDE_DIRS}
+)
+if(${PBS_UNDOLR_ENABLED})
+  target_include_directories(pbs_server_bin PRIVATE ${UndoLR_INCLUDE_DIR})
+endif()
+
+target_link_libraries(pbs_server_bin
+  PRIVATE
+  ${CMAKE_BINARY_DIR}/src/lib/Libtpp/libtpp.a
+	${CMAKE_BINARY_DIR}/src/lib/Libattr/libattr.a
+	${CMAKE_BINARY_DIR}/src/lib/Libutil/libutil.a
+	${CMAKE_BINARY_DIR}/src/lib/Liblog/liblog.a
+	${CMAKE_BINARY_DIR}/src/lib/Libnet/libnet.a
+	${CMAKE_BINARY_DIR}/src/lib/Libsec/libsec.a
+	${CMAKE_BINARY_DIR}/src/lib/Libsite/libsite.a
+	${CMAKE_BINARY_DIR}/src/lib/Libpython/libpbspython_svr.a
+	${CMAKE_BINARY_DIR}/src/lib/Libdb/pgsql/libdb.a
+  ${CMAKE_BINARY_DIR}/src/lib/Libpbs/libpbs.a
+  ${PostgreSQL_LIBRARIES}
+  ${EXPAT_LIBRARIES}
+  ${Ical_LIBRARIES}
+  ${ZLIB_LIBRARIES}
+  ${Python3_LIBRARIES}
+  Threads::Threads
+  ssl
+  crypto
+  dl
+  m)
+  target_compile_definitions(pbs_server_bin PRIVATE PYTHON)

@@ -1,4 +1,4 @@
-add_library(util
+set(UTIL_SOURCES
   get_hostname.c
   execvnode_seq_util.c
   pbs_ical.c
@@ -13,20 +13,19 @@ add_library(util
   pbs_aes_encrypt.c
   pbs_idx.c
 )
+if(${UndoLR_INCLUDE_DIR})
+set(UTIL_SOURCES ${UTIL_SOURCES} undolr.c)
+endif()
+
+add_library(util ${UTIL_SOURCES})
 target_include_directories(util
   PRIVATE
     ${CMAKE_SOURCE_DIR}/src/include
     ${CMAKE_BINARY_DIR}/src/include
     ${CMAKE_SOURCE_DIR}/include
     ${CMAKE_BINARY_DIR}/include
-    ${Ical_INCLUDES}
-	  ${UndoLR_INCLUDES})
-    # TODO:
-    # @libical_inc@ \
-    # @KRB5_CFLAGS@ \
-    # @libundolr_inc@)
-
-# TODO:
-# if UNDOLR_ENABLED
-# libutil_a_SOURCES += undolr.c
-# endif
+    ${Ical_INCLUDE_DIR}
+)
+if(${UndoLR_INCLUDE_DIR})
+target_include_directories(util PRIVATE ${UndoLR_INCLUDE_DIR})
+endif()

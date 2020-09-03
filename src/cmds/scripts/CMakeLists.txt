@@ -1,0 +1,10 @@
+
+configure_file(pbsrun.bgl.init.in pbsrun.bgl.init @ONLY)
+configure_file(pbsrun.ch_gm.init.in bsrun.ch_gm.init @ONLY)
+configure_file(pbsrun.ch_mx.init.in pbsrun.ch_mx.init @ONLY)
+configure_file(pbsrun.gm_mpd.init.in pbsrun.gm_mpd.init @ONLY)
+configure_file(pbsrun.intelmpi.init.in pbsrun.intelmpi.init @ONLY)
+configure_file(pbsrun.mpich2.init.in pbsrun.mpich2.init @ONLY)
+configure_file(pbsrun.mvapich1.init.in pbsrun.mvapich1.init @ONLY)
+configure_file(pbsrun.mvapich2.init.in pbsrun.mvapich2.init @ONLY)
+configure_file(pbsrun.mx_mpd.init.in pbsrun.mx_mpd.init @ONLY)

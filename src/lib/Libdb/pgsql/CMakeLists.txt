@@ -1,5 +1,4 @@
 add_library(db
-  db_postgres.h
   db_common.c
   db_attr.c
   db_job.c
@@ -14,5 +13,7 @@ target_include_directories(db
     ${CMAKE_BINARY_DIR}/src/include
     ${CMAKE_SOURCE_DIR}/include
     ${CMAKE_BINARY_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}
     ${PostgreSQL_INCLUDE_DIRS})
-target_link_libraries(db PRIVATE ${PostgreSQL_LIBRARIES})
+target_link_libraries(db PRIVATE
+  ${PostgreSQL_LIBRARIES})

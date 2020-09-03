@@ -1,4 +1,4 @@
-function(gen_attrdef_file name)
+function(gen_ecl_attrdef_file name)
   add_custom_command(OUTPUT ecl_${name}.c
     COMMAND ${Python3_EXECUTABLE}
       ${CMAKE_SOURCE_DIR}/buildutils/attr_parser.py
@@ -7,13 +7,13 @@ function(gen_attrdef_file name)
     MAIN_DEPENDENCY ${CMAKE_SOURCE_DIR}/src/lib/Libattr/master_${name}.xml)
 endfunction()
 
-gen_attrdef_file(job_attr_def)
-gen_attrdef_file(node_attr_def)
-gen_attrdef_file(queue_attr_def)
-gen_attrdef_file(resc_def_all)
-gen_attrdef_file(resv_attr_def)
-gen_attrdef_file(sched_attr_def)
-gen_attrdef_file(svr_attr_def)
+gen_ecl_attrdef_file(job_attr_def)
+gen_ecl_attrdef_file(node_attr_def)
+gen_ecl_attrdef_file(queue_attr_def)
+gen_ecl_attrdef_file(resc_def_all)
+gen_ecl_attrdef_file(resv_attr_def)
+gen_ecl_attrdef_file(sched_attr_def)
+gen_ecl_attrdef_file(svr_attr_def)
 
 set(LIBPBS_SOURCES
 	${CMAKE_SOURCE_DIR}/src/lib/Libattr/attr_fn_arst.c
@@ -241,7 +241,7 @@ set(LIBPBS_SOURCES
 	ecl_resv_attr_def.c
 )
 add_library(pbs STATIC ${LIBPBS_SOURCES})
-target_link_libraries(pbs PRIVATE crypto pthread)
+target_link_libraries(pbs PRIVATE crypto Threads::Threads)
 target_include_directories(pbs
   PRIVATE
     ${CMAKE_SOURCE_DIR}/src/include

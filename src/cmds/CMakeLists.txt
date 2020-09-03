@@ -1,5 +1,5 @@
 # add subdirectories
-# add_subdirectory(scripts)
+add_subdirectory(scripts)
 
 # CMAKETODO: fix find socket lib
 set(COMMON_LIBS
@@ -7,10 +7,13 @@ set(COMMON_LIBS
   ${CMAKE_BINARY_DIR}/src/lib/Libnet/libnet.a
   ${CMAKE_BINARY_DIR}/src/lib/Libsec/libsec.a
   ${CMAKE_BINARY_DIR}/src/lib/Libutil/libutil.a
-    pthread dl nsl)
+  Threads::Threads dl nsl)
 set(COMMON_SOURCES ${CMAKE_SOURCE_DIR}/src/lib/Libcmds/cmds_common.c)
 
-# add executables
+# function for adding cmd with common sources and 
+# link to common libs, for cmds that have more than
+# one source file or more link targets please add
+# them manually
 function(add_cmd name)
   add_executable(${name} ${name}.c ${COMMON_SOURCES})
   target_include_directories(${name}
@@ -50,11 +53,17 @@ add_cmd(qstart qstart.c)
 add_cmd(qstop qstop.c)
 add_cmd(qsub qsub.c)
 add_cmd(qterm qterm.c)
-# CMAKETODO: need @editline_lib@
-# add_executable(qmgr qmgr.c)
+add_executable(qmgr qmgr.c qmgr_sup.c ${COMMON_SOURCES})
+target_include_directories(qmgr
+  PRIVATE
+    ${CMAKE_SOURCE_DIR}/src/include
+    ${CMAKE_BINARY_DIR}/src/include
+    ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_BINARY_DIR}/include
+    ${Editline_INCLUDE_DIR})
+target_link_libraries(qmgr ${COMMON_LIBS} ${Editline_LIBRARIES})
 
-
-# # sbin programs
+# sbin programs
 add_executable(pbs_demux pbs_demux.c)
 target_include_directories(pbs_demux
   PRIVATE
@@ -64,17 +73,36 @@ target_include_directories(pbs_demux
   ${CMAKE_BINARY_DIR}/include)
 target_link_libraries(pbs_demux ${COMMON_LIBS})
 
-# add_executable(pbs_ds_password pbs_ds_password.c)
-
-# CMAKETODO: this is hard, need to link to extra stuff
+# CMAKETODO: undefined reference to get_hostaddress
 # add_executable(pbs_dataservice pbs_dataservice.c ${COMMON_SOURCES})
 # target_include_directories(pbs_dataservice
 #   PRIVATE
-#   ${CMAKE_SOURCE_DIR}/src/include
-#   ${CMAKE_BINARY_DIR}/src/include
-#   ${CMAKE_SOURCE_DIR}/include
-#   ${CMAKE_BINARY_DIR}/include)
-# target_link_libraries(pbs_dataservice ${COMMON_LIBS})
+#     ${CMAKE_SOURCE_DIR}/src/include
+#     ${CMAKE_BINARY_DIR}/src/include
+#     ${CMAKE_SOURCE_DIR}/include
+#     ${CMAKE_BINARY_DIR}/include
+#     ${PostgreSQL_INCLUDE_DIRS})
+# target_link_libraries(pbs_dataservice
+#   ${COMMON_LIBS}
+#   ${PostgreSQL_LIBRARIES}
+#   ${CMAKE_BINARY_DIR}/src/lib/Libdb/pgsql/libdb.a
+#   ssl
+#   crypto)
+
+# add_executable(pbs_ds_password pbs_ds_password.c ${COMMON_SOURCES})
+# target_include_directories(pbs_ds_password
+#   PRIVATE
+#     ${CMAKE_SOURCE_DIR}/src/include
+#     ${CMAKE_BINARY_DIR}/src/include
+#     ${CMAKE_SOURCE_DIR}/include
+#     ${CMAKE_BINARY_DIR}/include
+#     ${PostgreSQL_INCLUDE_DIRS})
+# target_link_libraries(pbs_ds_password
+#   ${COMMON_LIBS}
+#   ${PostgreSQL_LIBRARIES}
+#   ${CMAKE_BINARY_DIR}/src/lib/Libdb/pgsql/libdb.a
+#   ssl
+#   crypto)
 
 
 # dist bin programs
