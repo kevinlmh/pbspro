@@ -31,8 +31,8 @@ find_package(ZLIB REQUIRED)
 find_package(UndoLR QUIET)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
+find_package(HwLoc REQUIRED)
 # find_package(TCL REQUIRED)
-# find_package(HwLoc REQUIRED)
 # find_package(Sendmail REQUIRED)
 
 

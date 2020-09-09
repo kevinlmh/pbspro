@@ -67,32 +67,43 @@ int main()
   return (n);
 }" PBS_HAVE_PPOLL)
 
+# HAVE_GETPWUID HAVE_INITGROUPS HAVE_SETEUID HAVE_SETEGID HAVE_SETRESUID HAVE_SETRESGID
+check_c_source_compiles("
+#include <pwd.h>
+int main() {
+  struct passwd *pwd = getpwuid(getuid());
+}" HAVE_GETPWUID)
+
+check_c_source_compiles("
+#include <unistd.h>
+int main() {
+  initgroups(\"root\", 0);
+}" HAVE_INITGROUPS)
+
+check_c_source_compiles("
+#include <unistd.h>
+int main() {
+  setuid(1);
+}" HAVE_SETEUID)
+
+check_c_source_compiles("
+#include <unistd.h>
+int main() {
+  setgid(1);
+}" HAVE_SETEGID)
+
+check_c_source_compiles("
+#include <unistd.h>
+int main() {
+  setresuid(-1, -1, -1);
+}" HAVE_SETRESUID)
+
+check_c_source_compiles("
+#include <unistd.h>
+int main() {
+  setresgid(-1, -1, -1);
+}" HAVE_SETRESGID)
+
+
 configure_file(pbs_config.h.in pbs_config.h)
 configure_file(pbs_version.h.in pbs_version.h)
-
-# parse xml attribute files into header files
-function(gen_attrdef_header type)
-  if (${type} STREQUAL "resc")
-    # handle resc_def_all case since this one has irregular name
-    add_custom_target(${type}_def_enum.h
-      COMMAND ${Python3_EXECUTABLE}
-        ${CMAKE_SOURCE_DIR}/buildutils/attr_parser.py
-        -m ${CMAKE_SOURCE_DIR}/src/lib/Libattr/master_${type}_def_all.xml
-        -d ${CMAKE_CURRENT_BINARY_DIR}/${type}_def_enum.h
-      MAIN_DEPENDENCY ${CMAKE_SOURCE_DIR}/src/lib/Libattr/master_${type}_def_all.xml)
-  else()
-    add_custom_target(${type}_attr_enum.h
-      COMMAND ${Python3_EXECUTABLE}
-        ${CMAKE_SOURCE_DIR}/buildutils/attr_parser.py
-        -m ${CMAKE_SOURCE_DIR}/src/lib/Libattr/master_${type}_attr_def.xml
-        -d ${CMAKE_CURRENT_BINARY_DIR}/${type}_attr_enum.h
-      MAIN_DEPENDENCY ${CMAKE_SOURCE_DIR}/src/lib/Libattr/master_${type}_attr_def.xml)
-  endif()
-endfunction()
-gen_attrdef_header(job)
-gen_attrdef_header(node)
-gen_attrdef_header(queue)
-gen_attrdef_header(resc)
-gen_attrdef_header(resv)
-gen_attrdef_header(sched)
-gen_attrdef_header(svr)

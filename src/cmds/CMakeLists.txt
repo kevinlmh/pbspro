@@ -60,7 +60,8 @@ target_include_directories(qmgr
     ${CMAKE_BINARY_DIR}/src/include
     ${CMAKE_SOURCE_DIR}/include
     ${CMAKE_BINARY_DIR}/include
-    ${Editline_INCLUDE_DIR})
+    ${Editline_INCLUDE_DIR}
+    ${CMAKE_BINARY_DIR}/src/lib/Libattr)
 target_link_libraries(qmgr ${COMMON_LIBS} ${Editline_LIBRARIES})
 
 # sbin programs

@@ -25,6 +25,7 @@ target_include_directories(util
     ${CMAKE_SOURCE_DIR}/include
     ${CMAKE_BINARY_DIR}/include
     ${Ical_INCLUDE_DIR}
+    ${CMAKE_BINARY_DIR}/src/lib/Libattr
 )
 if(${UndoLR_INCLUDE_DIR})
 target_include_directories(util PRIVATE ${UndoLR_INCLUDE_DIR})

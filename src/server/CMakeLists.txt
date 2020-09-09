@@ -75,6 +75,7 @@ target_include_directories(pbs_server_bin
     ${Ical_INCLUDE_DIR}
     ${ZLIB_INCLUDE_DIRS}
     ${Python3_INCLUDE_DIRS}
+    ${CMAKE_BINARY_DIR}/src/lib/Libattr
 )
 if(${PBS_UNDOLR_ENABLED})
   target_include_directories(pbs_server_bin PRIVATE ${UndoLR_INCLUDE_DIR})
