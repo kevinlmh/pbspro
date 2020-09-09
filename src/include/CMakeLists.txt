@@ -104,6 +104,5 @@ int main() {
   setresgid(-1, -1, -1);
 }" HAVE_SETRESGID)
 
-
 configure_file(pbs_config.h.in pbs_config.h)
 configure_file(pbs_version.h.in pbs_version.h)

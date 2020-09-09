@@ -1,0 +1,14 @@
+add_executable(mom_rcp
+  extern.h
+  pathnames.h
+  pbs_stat.h
+  rcp.c
+  replace.c
+  util.c)
+target_include_directories(mom_rcp
+  PRIVATE
+  ${CMAKE_SOURCE_DIR}/src/include
+  ${CMAKE_BINARY_DIR}/src/include
+  ${CMAKE_SOURCE_DIR}/include
+  ${CMAKE_BINARY_DIR}/include
+)
