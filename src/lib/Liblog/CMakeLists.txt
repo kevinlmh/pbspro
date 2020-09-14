@@ -9,7 +9,5 @@ target_include_directories(log
   PRIVATE
       ${CMAKE_SOURCE_DIR}/src/include
       ${CMAKE_BINARY_DIR}/src/include
-      ${CMAKE_SOURCE_DIR}/include
-      ${CMAKE_BINARY_DIR}/include
       ${CMAKE_BINARY_DIR}/src/lib/Libattr
 )

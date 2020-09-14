@@ -20,8 +20,7 @@ function(add_cmd name)
     PRIVATE
     ${CMAKE_SOURCE_DIR}/src/include
     ${CMAKE_BINARY_DIR}/src/include
-    ${CMAKE_SOURCE_DIR}/include
-    ${CMAKE_BINARY_DIR}/include)
+)
   target_link_libraries(${name} ${COMMON_LIBS})
 endfunction()
 
@@ -58,8 +57,6 @@ target_include_directories(qmgr
   PRIVATE
     ${CMAKE_SOURCE_DIR}/src/include
     ${CMAKE_BINARY_DIR}/src/include
-    ${CMAKE_SOURCE_DIR}/include
-    ${CMAKE_BINARY_DIR}/include
     ${Editline_INCLUDE_DIR}
     ${CMAKE_BINARY_DIR}/src/lib/Libattr)
 target_link_libraries(qmgr ${COMMON_LIBS} ${Editline_LIBRARIES})
@@ -70,8 +67,7 @@ target_include_directories(pbs_demux
   PRIVATE
   ${CMAKE_SOURCE_DIR}/src/include
   ${CMAKE_BINARY_DIR}/src/include
-  ${CMAKE_SOURCE_DIR}/include
-  ${CMAKE_BINARY_DIR}/include)
+)
 target_link_libraries(pbs_demux ${COMMON_LIBS})
 
 # CMAKETODO: undefined reference to get_hostaddress
@@ -80,8 +76,6 @@ target_link_libraries(pbs_demux ${COMMON_LIBS})
 #   PRIVATE
 #     ${CMAKE_SOURCE_DIR}/src/include
 #     ${CMAKE_BINARY_DIR}/src/include
-#     ${CMAKE_SOURCE_DIR}/include
-#     ${CMAKE_BINARY_DIR}/include
 #     ${PostgreSQL_INCLUDE_DIRS})
 # target_link_libraries(pbs_dataservice
 #   ${COMMON_LIBS}
@@ -95,8 +89,6 @@ target_link_libraries(pbs_demux ${COMMON_LIBS})
 #   PRIVATE
 #     ${CMAKE_SOURCE_DIR}/src/include
 #     ${CMAKE_BINARY_DIR}/src/include
-#     ${CMAKE_SOURCE_DIR}/include
-#     ${CMAKE_BINARY_DIR}/include
 #     ${PostgreSQL_INCLUDE_DIRS})
 # target_link_libraries(pbs_ds_password
 #   ${COMMON_LIBS}
@@ -118,3 +110,51 @@ configure_file(pbs_remsh.in pbs_remsh @ONLY)
 configure_file(pbsrun.in pbsrun @ONLY)
 configure_file(pbsrun_unwrap.in pbsrun_unwrap @ONLY)
 configure_file(pbsrun_wrap.in pbsrun_wrap @ONLY)
+
+install(TARGETS 
+  pbsdsh
+  pbsnodes
+  pbs_attach
+  pbs_tmrsh
+  pbs_ralter
+  pbs_rdel
+  pbs_rstat
+  pbs_rsub
+  pbs_release_nodes
+  qalter
+  qdel
+  qdisable
+  qenable
+  qhold
+  qmgr
+  qmove
+  qorder
+  qmsg
+  qrerun
+  qrls
+  qrun
+  qselect
+  qsig
+  qstat
+  qstart
+  qstop
+  qsub
+  qterm
+DESTINATION bin)
+# install(TARGETS 
+#   pbs_dataservice.bin
+#   pbs_ds_password.bin
+#   pbs_demux
+# DESTINATION sbin)
+install(PROGRAMS
+  ${CMAKE_CURRENT_BINARY_DIR}/mpiexec
+  ${CMAKE_CURRENT_BINARY_DIR}/nqs2pbs
+  ${CMAKE_CURRENT_BINARY_DIR}/pbs_lamboot
+  ${CMAKE_CURRENT_BINARY_DIR}/pbs_mpihp
+  ${CMAKE_CURRENT_BINARY_DIR}/pbs_mpilam
+  ${CMAKE_CURRENT_BINARY_DIR}/pbs_mpirun
+  ${CMAKE_CURRENT_BINARY_DIR}/pbs_remsh
+  ${CMAKE_CURRENT_BINARY_DIR}/pbsrun
+  ${CMAKE_CURRENT_BINARY_DIR}/pbsrun_unwrap
+  ${CMAKE_CURRENT_BINARY_DIR}/pbsrun_wrap
+DESTINATION bin)

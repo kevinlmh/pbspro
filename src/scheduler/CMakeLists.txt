@@ -17,8 +17,6 @@ set(COMMON_LIBS
 set(COMMON_INC_DIRS 
   ${CMAKE_SOURCE_DIR}/src/include
   ${CMAKE_BINARY_DIR}/src/include
-  ${CMAKE_SOURCE_DIR}/include
-  ${CMAKE_BINARY_DIR}/include
   ${ZLIB_INCLUDE_DIRS}
   ${Python3_INCLUDE_DIRS}
 )
@@ -96,3 +94,6 @@ endif()
 add_executable(pbsfs pbsfs.c)
 target_include_directories(pbsfs PRIVATE ${COMMON_INC_DIRS})
 target_link_libraries(pbsfs PRIVATE ${COMMON_LIBS})
+
+install(TARGETS sched DESTINATION lib)
+install(TARGETS pbs_sched pbsfs DESTINATION sbin)

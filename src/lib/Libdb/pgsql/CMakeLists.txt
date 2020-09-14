@@ -11,8 +11,6 @@ target_include_directories(db
   PRIVATE
     ${CMAKE_SOURCE_DIR}/src/include
     ${CMAKE_BINARY_DIR}/src/include
-    ${CMAKE_SOURCE_DIR}/include
-    ${CMAKE_BINARY_DIR}/include
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${PostgreSQL_INCLUDE_DIRS})
 target_link_libraries(db PRIVATE

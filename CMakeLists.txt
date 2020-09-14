@@ -72,6 +72,8 @@ endif()
 if(${UndoLR_FOUND})
 	set(PBS_UNDOLR_ENABLED)
 endif()
+# default install prefix
+set(CMAKE_INSTALL_PREFIX /opt/pbs)
 # if(${CMAKE_OS_ID} STREQUAL ubuntu OR ${CMAKE_OS_ID} STREQUAL debian)
 # 	set(SYSTEMD_UNIT_DIR /lib/systemd/system)
 # else()
@@ -79,5 +81,4 @@ endif()
 # endif()
 
 # add the src subdirectory
-add_subdirectory(include)
 add_subdirectory(src)

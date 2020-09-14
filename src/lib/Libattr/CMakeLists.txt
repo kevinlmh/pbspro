@@ -93,6 +93,4 @@ add_library(attr STATIC ${LIBATTR_SOURCES})
 target_include_directories(attr PRIVATE
 	${CMAKE_SOURCE_DIR}/src/include
   ${CMAKE_BINARY_DIR}/src/include
-  ${CMAKE_SOURCE_DIR}/include
-  ${CMAKE_BINARY_DIR}/include
   ${CMAKE_CURRENT_BINARY_DIR})

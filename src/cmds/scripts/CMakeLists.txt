@@ -1,4 +1,3 @@
-
 configure_file(pbsrun.bgl.init.in pbsrun.bgl.init @ONLY)
 configure_file(pbsrun.ch_gm.init.in bsrun.ch_gm.init @ONLY)
 configure_file(pbsrun.ch_mx.init.in pbsrun.ch_mx.init @ONLY)

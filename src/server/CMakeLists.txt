@@ -68,8 +68,6 @@ target_include_directories(pbs_server_bin
   PRIVATE
     ${CMAKE_SOURCE_DIR}/src/include
     ${CMAKE_BINARY_DIR}/src/include
-    ${CMAKE_SOURCE_DIR}/include
-    ${CMAKE_BINARY_DIR}/include
     ${PostgreSQL_INCLUDE_DIRS}
     ${EXPAT_INCLUDE_DIRS}
     ${Ical_INCLUDE_DIR}
@@ -107,5 +105,7 @@ target_link_libraries(pbs_server_bin
   util
   # -Xlinker
   # -export-dynamic
-  )
-  target_compile_definitions(pbs_server_bin PRIVATE PYTHON)
+)
+target_compile_definitions(pbs_server_bin PRIVATE PYTHON)
+
+install(TARGETS pbs_server_bin DESTINATION sbin)

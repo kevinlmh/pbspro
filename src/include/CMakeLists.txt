@@ -106,3 +106,5 @@ int main() {
 
 configure_file(pbs_config.h.in pbs_config.h)
 configure_file(pbs_version.h.in pbs_version.h)
+
+install(FILES pbs_error.h pbs_ifl.h rm.h tm.h tm_.h DESTINATION include)

@@ -61,8 +61,6 @@ target_include_directories(pbs_mom
 	PRIVATE
 	${CMAKE_SOURCE_DIR}/src/include
 	${CMAKE_BINARY_DIR}/src/include
-	${CMAKE_SOURCE_DIR}/include
-	${CMAKE_BINARY_DIR}/include
 	${HwLoc_INCLUDE_DIR}
 	${ZLIB_INCLUDE_DIRS}
 	${Python3_INCLUDE_DIRS}
@@ -97,3 +95,11 @@ if(${PBS_UNDOLR_ENABLED})
   target_include_directories(pbs_mom PRIVATE ${UndoLR_INCLUDE_DIR})
 endif()
 target_compile_definitions(pbs_mom PRIVATE PBS_MOM PYTHON HWLOC)
+
+# if ALPS_ENABLED
+# pbs_mom_CPPFLAGS += -DMOM_ALPS=1 @expat_inc@
+# pbs_mom_LDADD += @expat_lib@
+# pbs_mom_SOURCES += linux/alps.c
+# endif
+
+install(TARGETS pbs_mom DESTINATION sbin)
