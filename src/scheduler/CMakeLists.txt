@@ -21,6 +21,10 @@ set(COMMON_INC_DIRS
   ${Python3_INCLUDE_DIRS}
 )
 
+if(${PBS_UNDOLR_ENABLED})
+  list(APPEND EXTRA_INCLUDES ${UndoLR_INCLUDE_DIR})
+endif()
+
 add_library(sched STATIC
   ${CMAKE_SOURCE_DIR}/src/lib/Libpython/shared_python_utils.c
   buckets.c
@@ -85,11 +89,11 @@ target_include_directories(sched PRIVATE ${COMMON_INC_DIRS} ${CMAKE_BINARY_DIR}/
 target_link_libraries(sched PRIVATE dl m)
 
 add_executable(pbs_sched pbs_sched.c)
-target_include_directories(pbs_sched PRIVATE ${COMMON_INC_DIRS} ${CMAKE_BINARY_DIR}/src/lib/Libattr)
+target_include_directories(pbs_sched PRIVATE
+  ${COMMON_INC_DIRS} 
+  ${CMAKE_BINARY_DIR}/src/lib/Libattr
+  ${EXTRA_INCLUDES})
 target_link_libraries(pbs_sched PRIVATE PRIVATE ${COMMON_LIBS})
-if(${PBS_UNDOLR_ENABLED})
-  target_include_directories(pbs_sched PRIVATE ${UndoLR_INCLUDE_DIR})
-endif()
 
 add_executable(pbsfs pbsfs.c)
 target_include_directories(pbsfs PRIVATE ${COMMON_INC_DIRS})

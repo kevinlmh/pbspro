@@ -61,7 +61,11 @@ set(SERVER_SOURCES
   svr_resccost.c
   svr_credfunc.c
   user_func.c
-  vnparse.c)
+  vnparse.c
+)
+if(${PBS_UNDOLR_ENABLED})
+  list(APPEND EXTRA_INCLUDES ${UndoLR_INCLUDE_DIR})
+endif()
 
 add_executable(pbs_server_bin ${SERVER_SOURCES})
 target_include_directories(pbs_server_bin
@@ -74,11 +78,8 @@ target_include_directories(pbs_server_bin
     ${ZLIB_INCLUDE_DIRS}
     ${Python3_INCLUDE_DIRS}
     ${CMAKE_BINARY_DIR}/src/lib/Libattr
+    ${EXTRA_INCLUDES}
 )
-if(${PBS_UNDOLR_ENABLED})
-  target_include_directories(pbs_server_bin PRIVATE ${UndoLR_INCLUDE_DIR})
-endif()
-
 target_link_libraries(pbs_server_bin
   PRIVATE
   ${CMAKE_BINARY_DIR}/src/lib/Libtpp/libtpp.a
