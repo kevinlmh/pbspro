@@ -7,7 +7,7 @@ PRIVATE
 )
 target_link_libraries(pbs_iff
 PRIVATE
-  ${CMAKE_BINARY_DIR}/src/lib/Libpbs/libpbs.a
+  ${CMAKE_BINARY_DIR}/src/lib/Libpbs/libpbs_static.a
   ${CMAKE_BINARY_DIR}/src/lib/Libutil/libutil.a
   ${CMAKE_BINARY_DIR}/src/lib/Libnet/libnet.a
   ${CMAKE_BINARY_DIR}/src/lib/Libsec/libsec.a
@@ -18,4 +18,4 @@ PRIVATE
   # @KRB5_LIBS@
 )
 
-install(TARGETS pbs_iff DESTINATION sbin)
+install(TARGETS pbs_iff DESTINATION ${CMAKE_INSTALL_SBINDIR})

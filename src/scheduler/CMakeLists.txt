@@ -1,6 +1,6 @@
 set(COMMON_LIBS
   sched
-  ${CMAKE_BINARY_DIR}/src/lib/Libpbs/libpbs.a
+  ${CMAKE_BINARY_DIR}/src/lib/Libpbs/libpbs_static.a
   ${CMAKE_BINARY_DIR}/src/lib/Libtpp/libtpp.a
   ${CMAKE_BINARY_DIR}/src/lib/Libsec/libsec.a
   ${CMAKE_BINARY_DIR}/src/lib/Liblog/liblog.a
@@ -99,5 +99,5 @@ add_executable(pbsfs pbsfs.c)
 target_include_directories(pbsfs PRIVATE ${COMMON_INC_DIRS})
 target_link_libraries(pbsfs PRIVATE ${COMMON_LIBS})
 
-install(TARGETS sched DESTINATION lib)
-install(TARGETS pbs_sched pbsfs DESTINATION sbin)
+install(TARGETS sched DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(TARGETS pbs_sched pbsfs DESTINATION ${CMAKE_INSTALL_SBINDIR})

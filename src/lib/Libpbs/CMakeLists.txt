@@ -240,10 +240,21 @@ set(LIBPBS_SOURCES
 	ecl_resc_def_all.c
 	ecl_resv_attr_def.c
 )
-add_library(pbs STATIC ${LIBPBS_SOURCES})
+add_library(pbs SHARED ${LIBPBS_SOURCES})
 target_link_libraries(pbs PRIVATE crypto Threads::Threads)
 target_include_directories(pbs
   PRIVATE
     ${CMAKE_SOURCE_DIR}/src/include
     ${CMAKE_BINARY_DIR}/src/include
-	${CMAKE_BINARY_DIR}/src/lib/Libattr)
+	${CMAKE_BINARY_DIR}/src/lib/Libattr
+)
+add_library(pbs_static STATIC ${LIBPBS_SOURCES})
+target_link_libraries(pbs_static PRIVATE crypto Threads::Threads)
+target_include_directories(pbs_static
+  PRIVATE
+    ${CMAKE_SOURCE_DIR}/src/include
+    ${CMAKE_BINARY_DIR}/src/include
+	${CMAKE_BINARY_DIR}/src/lib/Libattr
+)
+
+install(TARGETS pbs pbs_static DESTINATION ${CMAKE_INSTALL_LIBDIR})

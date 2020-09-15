@@ -3,7 +3,7 @@ add_subdirectory(scripts)
 
 # CMAKETODO: fix find socket lib
 set(COMMON_LIBS
-  ${CMAKE_BINARY_DIR}/src/lib/Libpbs/libpbs.a
+  ${CMAKE_BINARY_DIR}/src/lib/Libpbs/libpbs_static.a
   ${CMAKE_BINARY_DIR}/src/lib/Libnet/libnet.a
   ${CMAKE_BINARY_DIR}/src/lib/Libsec/libsec.a
   ${CMAKE_BINARY_DIR}/src/lib/Libutil/libutil.a
@@ -80,7 +80,7 @@ target_link_libraries(pbs_demux ${COMMON_LIBS})
 # target_link_libraries(pbs_dataservice
 #   ${COMMON_LIBS}
 #   ${PostgreSQL_LIBRARIES}
-#   ${CMAKE_BINARY_DIR}/src/lib/Libdb/pgsql/libdb.a
+#   ${CMAKE_BINARY_DIR}/src/lib/Libdb/pgsql/libdb.so
 #   ssl
 #   crypto)
 
@@ -93,7 +93,7 @@ target_link_libraries(pbs_demux ${COMMON_LIBS})
 # target_link_libraries(pbs_ds_password
 #   ${COMMON_LIBS}
 #   ${PostgreSQL_LIBRARIES}
-#   ${CMAKE_BINARY_DIR}/src/lib/Libdb/pgsql/libdb.a
+#   ${CMAKE_BINARY_DIR}/src/lib/Libdb/pgsql/libdb.so
 #   ssl
 #   crypto)
 
@@ -104,7 +104,7 @@ configure_file(mpiexec.in mpiexec @ONLY)
 configure_file(nqs2pbs.in nqs2pbs @ONLY)
 configure_file(pbs_lamboot.in pbs_lamboot @ONLY)
 configure_file(pbs_mpihp.in pbs_mpihp @ONLY)
-configure_file(pbs_mpilam.in pbs_mpiam @ONLY)
+configure_file(pbs_mpilam.in pbs_mpilam @ONLY)
 configure_file(pbs_mpirun.in pbs_mpirun @ONLY)
 configure_file(pbs_remsh.in pbs_remsh @ONLY)
 configure_file(pbsrun.in pbsrun @ONLY)
@@ -140,7 +140,7 @@ install(TARGETS
   qstop
   qsub
   qterm
-DESTINATION bin)
+DESTINATION ${CMAKE_INSTALL_BINDIR})
 # install(TARGETS 
 #   pbs_dataservice.bin
 #   pbs_ds_password.bin
@@ -157,4 +157,4 @@ install(PROGRAMS
   ${CMAKE_CURRENT_BINARY_DIR}/pbsrun
   ${CMAKE_CURRENT_BINARY_DIR}/pbsrun_unwrap
   ${CMAKE_CURRENT_BINARY_DIR}/pbsrun_wrap
-DESTINATION bin)
+DESTINATION ${CMAKE_INSTALL_BINDIR})

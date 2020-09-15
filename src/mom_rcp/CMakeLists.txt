@@ -10,4 +10,4 @@ target_include_directories(mom_rcp
   ${CMAKE_SOURCE_DIR}/src/include
   ${CMAKE_BINARY_DIR}/src/include
 )
-install(TARGETS mom_rcp DESTINATION sbin)
+install(TARGETS mom_rcp DESTINATION ${CMAKE_INSTALL_SBINDIR})

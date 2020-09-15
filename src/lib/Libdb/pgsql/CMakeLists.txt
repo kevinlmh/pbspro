@@ -1,4 +1,4 @@
-add_library(db
+add_library(db SHARED
   db_common.c
   db_attr.c
   db_job.c
@@ -15,3 +15,4 @@ target_include_directories(db
     ${PostgreSQL_INCLUDE_DIRS})
 target_link_libraries(db PRIVATE
   ${PostgreSQL_LIBRARIES})
+install(TARGETS db DESTINATION ${CMAKE_INSTALL_LIBDIR})

@@ -119,4 +119,4 @@ check_symbol_exists(setresgid unistd.h HAVE_SETRESGID)
 configure_file(pbs_config.h.in pbs_config.h)
 configure_file(pbs_version.h.in pbs_version.h)
 
-install(FILES pbs_error.h pbs_ifl.h rm.h tm.h tm_.h DESTINATION include)
+install(FILES pbs_error.h pbs_ifl.h rm.h tm.h tm_.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})

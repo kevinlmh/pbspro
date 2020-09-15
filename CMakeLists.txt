@@ -12,12 +12,12 @@ set(PBS_VERSION ${PBS_MAJOR_VERSION}.${PBS_MINOR_VERSION}.${PBS_PATCH_VERSION} C
 # set the project name
 project(openpbs VERSION ${PBS_VERSION} LANGUAGES C)
 
-# add .cmake dir to CMAKE_MODULE_PATH so we can use
-# our own cmake files
+# add .cmake dir to CMAKE_MODULE_PATH so we can use our own modules
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/.cmake)
 
-# include GNU install directories to find editline
-# include(GNUInstallDirs)
+# provides install directory variables as defined by the GNU Coding Standards
+include(GNUInstallDirs)
+
 # include(OsRelease)
 
 # need these packages to build
@@ -32,6 +32,7 @@ find_package(UndoLR QUIET)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 find_package(HwLoc REQUIRED)
+find_package(X11)
 # find_package(TCL REQUIRED)
 # find_package(Sendmail REQUIRED)
 
@@ -43,7 +44,7 @@ option(ENABLE_ALPS "Enable ALPS support" OFF)
 option(ENABLE_PTL "Enable PTL" ON)
 
 ### set variables 
-set(PBS_SERVER_HOME /var/spool/pbs CACHE STRING "PBS home directory")
+set(PBS_HOME_DIR /var/spool/pbs CACHE STRING "PBS home directory")
 # FIXME: subst database_user
 set(PBS_DATA_SERVICE_USER postgres CACHE STRING "PBS database user")
 # FIXME: Do we need PBS_SERVER_FILE_NAME?

@@ -72,7 +72,7 @@ target_include_directories(pbs_mom
 target_link_libraries(pbs_mom
 	PRIVATE
 	${CMAKE_BINARY_DIR}/src/lib/Libattr/libattr.a
-	${CMAKE_BINARY_DIR}/src/lib/Libpbs/libpbs.a
+	${CMAKE_BINARY_DIR}/src/lib/Libpbs/libpbs_static.a
 	${CMAKE_BINARY_DIR}/src/lib/Libtpp/libtpp.a
 	${CMAKE_BINARY_DIR}/src/lib/Liblog/liblog.a
 	${CMAKE_BINARY_DIR}/src/lib/Libnet/libnet.a
@@ -102,4 +102,4 @@ target_compile_definitions(pbs_mom PRIVATE PBS_MOM PYTHON HWLOC)
 # pbs_mom_SOURCES += linux/alps.c
 # endif
 
-install(TARGETS pbs_mom DESTINATION sbin)
+install(TARGETS pbs_mom DESTINATION ${CMAKE_INSTALL_SBINDIR})

@@ -65,6 +65,7 @@ set(SERVER_SOURCES
 )
 if(${PBS_UNDOLR_ENABLED})
   list(APPEND EXTRA_INCLUDES ${UndoLR_INCLUDE_DIR})
+  list(APPEND EXTRA_LIBS ${UndoLR_LIBRARIES})
 endif()
 
 add_executable(pbs_server_bin ${SERVER_SOURCES})
@@ -90,8 +91,8 @@ target_link_libraries(pbs_server_bin
 	${CMAKE_BINARY_DIR}/src/lib/Libsec/libsec.a
 	${CMAKE_BINARY_DIR}/src/lib/Libsite/libsite.a
 	${CMAKE_BINARY_DIR}/src/lib/Libpython/libpbspython_svr.a
-	${CMAKE_BINARY_DIR}/src/lib/Libdb/pgsql/libdb.a
-  ${CMAKE_BINARY_DIR}/src/lib/Libpbs/libpbs.a
+	${CMAKE_BINARY_DIR}/src/lib/Libdb/pgsql/libdb.so
+  ${CMAKE_BINARY_DIR}/src/lib/Libpbs/libpbs_static.a
   ${PostgreSQL_LIBRARIES}
   ${EXPAT_LIBRARIES}
   ${Ical_LIBRARIES}
@@ -104,9 +105,29 @@ target_link_libraries(pbs_server_bin
   dl
   m
   util
+  ${EXTRA_LIBS}
   # -Xlinker
   # -export-dynamic
 )
 target_compile_definitions(pbs_server_bin PRIVATE PYTHON)
 
-install(TARGETS pbs_server_bin DESTINATION sbin)
+add_executable(pbs_comm pbs_comm.c)
+target_include_directories(pbs_comm
+  PRIVATE
+  ${CMAKE_SOURCE_DIR}/src/include
+  ${CMAKE_BINARY_DIR}/src/include
+  ${ZLIB_INCLUDE_DIRS}
+  ${EXTRA_INCLUDES}
+)
+target_link_libraries(pbs_comm
+  PRIVATE
+  ${CMAKE_BINARY_DIR}/src/lib/Liblog/liblog.a
+  ${CMAKE_BINARY_DIR}/src/lib/Libtpp/libtpp.a
+  ${CMAKE_BINARY_DIR}/src/lib/Libutil/libutil.a
+  ${CMAKE_BINARY_DIR}/src/lib/Libpbs/libpbs_static.a
+  Threads::Threads
+  ${ZLIB_LIBRARIES}
+  ${EXTRA_LIBS}
+  dl
+)
+install(TARGETS pbs_server_bin pbs_comm DESTINATION ${CMAKE_INSTALL_SBINDIR})
