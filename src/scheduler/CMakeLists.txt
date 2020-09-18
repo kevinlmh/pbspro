@@ -86,7 +86,7 @@ add_library(sched STATIC
   site_code.h
   site_data.h)
 target_include_directories(sched PRIVATE ${COMMON_INC_DIRS} ${CMAKE_BINARY_DIR}/src/lib/Libattr)
-target_link_libraries(sched PRIVATE dl m)
+target_link_libraries(sched PRIVATE ${CMAKE_DL_LIBS} ${MATH_LIBRARY})
 
 add_executable(pbs_sched pbs_sched.c)
 target_include_directories(pbs_sched PRIVATE

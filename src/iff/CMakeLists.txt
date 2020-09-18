@@ -13,7 +13,7 @@ PRIVATE
   ${CMAKE_BINARY_DIR}/src/lib/Libsec/libsec.a
   Threads::Threads
   ${ZLIB_LIBRARIES}
-  dl
+  ${CMAKE_DL_LIBS} 
   # @socket_lib@
   # @KRB5_LIBS@
 )

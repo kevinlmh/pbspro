@@ -13,6 +13,9 @@ target_include_directories(db
     ${CMAKE_BINARY_DIR}/src/include
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${PostgreSQL_INCLUDE_DIRS})
-target_link_libraries(db PRIVATE
-  ${PostgreSQL_LIBRARIES})
+target_link_libraries(db
+  PRIVATE
+  ${PostgreSQL_LIBRARIES}
+)
+# need to link to libpbs and libnet
 install(TARGETS db DESTINATION ${CMAKE_INSTALL_LIBDIR})

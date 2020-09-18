@@ -82,14 +82,6 @@ set(LIBATTR_SOURCES
   sched_attr_enum.h
   svr_attr_enum.h)
 add_library(attr STATIC ${LIBATTR_SOURCES})
-# add_dependencies(attr
-#   resc_def_enum.h
-#   job_attr_enum.h
-#   node_attr_enum.h
-#   queue_attr_enum.h
-#   resv_attr_enum.h
-#   sched_attr_enum.h
-#   svr_attr_enum.h)
 target_include_directories(attr PRIVATE
 	${CMAKE_SOURCE_DIR}/src/include
   ${CMAKE_BINARY_DIR}/src/include

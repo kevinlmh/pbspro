@@ -7,7 +7,9 @@ set(COMMON_LIBS
   ${CMAKE_BINARY_DIR}/src/lib/Libnet/libnet.a
   ${CMAKE_BINARY_DIR}/src/lib/Libsec/libsec.a
   ${CMAKE_BINARY_DIR}/src/lib/Libutil/libutil.a
-  Threads::Threads dl nsl)
+  Threads::Threads
+  ${CMAKE_DL_LIBS} 
+  nsl)
 set(COMMON_SOURCES ${CMAKE_SOURCE_DIR}/src/lib/Libcmds/cmds_common.c)
 
 # function for adding cmd with common sources and 
@@ -81,8 +83,8 @@ target_link_libraries(pbs_demux ${COMMON_LIBS})
 #   ${COMMON_LIBS}
 #   ${PostgreSQL_LIBRARIES}
 #   ${CMAKE_BINARY_DIR}/src/lib/Libdb/pgsql/libdb.so
-#   ssl
-#   crypto)
+#   OpenSSL::SSL
+#   OpenSSL::Crypto)
 
 # add_executable(pbs_ds_password pbs_ds_password.c ${COMMON_SOURCES})
 # target_include_directories(pbs_ds_password
@@ -94,8 +96,8 @@ target_link_libraries(pbs_demux ${COMMON_LIBS})
 #   ${COMMON_LIBS}
 #   ${PostgreSQL_LIBRARIES}
 #   ${CMAKE_BINARY_DIR}/src/lib/Libdb/pgsql/libdb.so
-#   ssl
-#   crypto)
+#   OpenSSL::SSL
+#   OpenSSL::Crypto)
 
 
 # dist bin programs

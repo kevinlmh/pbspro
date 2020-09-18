@@ -82,10 +82,10 @@ target_link_libraries(pbs_mom
 	${HwLoc_LIBRARIES}
 	${Python3_LIBRARIES}
 	${ZLIB_LIBRARIES}
-	ssl
-	crypto
+	OpenSSL::SSL
+	OpenSSL::Crypto
 	Threads::Threads
-	dl
+	${CMAKE_DL_LIBS} 
 	# @pmix_lib@
 	# @PYTHON_LDFLAGS@
 	# @mom_mach_libs@

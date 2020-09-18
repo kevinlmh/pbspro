@@ -7,7 +7,14 @@ add_library(log
 )
 target_include_directories(log 
   PRIVATE
-      ${CMAKE_SOURCE_DIR}/src/include
-      ${CMAKE_BINARY_DIR}/src/include
-      ${CMAKE_BINARY_DIR}/src/lib/Libattr
+  ${CMAKE_SOURCE_DIR}/src/include
+  ${CMAKE_BINARY_DIR}/src/include
+  ${CMAKE_BINARY_DIR}/src/lib/Libattr
 )
+target_link_libraries(log
+  PUBLIC
+  ${CMAKE_BINARY_DIR}/src/lib/Libnet/libnet.a
+  ${CMAKE_BINARY_DIR}/src/lib/Libutil/libutil.a
+  ${CMAKE_BINARY_DIR}/src/lib/Libpbs/libpbs.a
+)
+# interface: libutil, libnet, libpbs

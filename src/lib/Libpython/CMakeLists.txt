@@ -1,9 +1,10 @@
+# use the cross-platform safe "${CMAKE_COMMAND} -E echo"
 add_custom_command(OUTPUT pbs_ifl.i
-  COMMAND echo '%module pbs_ifl' > pbs_ifl.i
-  COMMAND echo '%{' >> pbs_ifl.i
-  COMMAND echo '\#include \"pbs_ifl.h\"' >> pbs_ifl.i
-  COMMAND echo '%}' >> pbs_ifl.i
-  COMMAND echo '%include \"pbs_ifl.h\"' >> pbs_ifl.i)
+  COMMAND ${CMAKE_COMMAND} -E echo '%module pbs_ifl' > pbs_ifl.i
+  COMMAND ${CMAKE_COMMAND} -E echo '%{' >> pbs_ifl.i
+  COMMAND ${CMAKE_COMMAND} -E echo '\#include \"pbs_ifl.h\"' >> pbs_ifl.i
+  COMMAND ${CMAKE_COMMAND} -E echo '%}' >> pbs_ifl.i
+  COMMAND ${CMAKE_COMMAND} -E echo '%include \"pbs_ifl.h\"' >> pbs_ifl.i)
 
 add_custom_command(OUTPUT pbs_ifl_wrap.c
   COMMAND ${SWIG_EXECUTABLE}

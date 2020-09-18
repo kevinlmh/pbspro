@@ -100,10 +100,10 @@ target_link_libraries(pbs_server_bin
   ${Python3_LIBRARIES}
   Threads::Threads
   # -L/usr/lib64
-  ssl
-  crypto
-  dl
-  m
+  OpenSSL::SSL
+  OpenSSL::Crypto
+  ${CMAKE_DL_LIBS}
+  ${MATH_LIBRARY}
   util
   ${EXTRA_LIBS}
   # -Xlinker
@@ -128,6 +128,6 @@ target_link_libraries(pbs_comm
   Threads::Threads
   ${ZLIB_LIBRARIES}
   ${EXTRA_LIBS}
-  dl
+  ${CMAKE_DL_LIBS} 
 )
 install(TARGETS pbs_server_bin pbs_comm DESTINATION ${CMAKE_INSTALL_SBINDIR})
