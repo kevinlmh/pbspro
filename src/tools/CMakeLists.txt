@@ -176,32 +176,32 @@ target_link_libraries(pbs_wish
   ${CMAKE_DL_LIBS}
 )
 
-add_executable(printjob_bin
+add_executable(printjob.bin
   printjob.c
   ${CMAKE_SOURCE_DIR}/src/lib/Libcmds/cmds_common.c
 )
-target_include_directories(printjob_bin
+target_include_directories(printjob.bin
   PRIVATE
   ${COMMON_INCLUDES}
   ${CMAKE_BINARY_DIR}/src/lib/Libattr)
-target_link_libraries(printjob_bin
+target_link_libraries(printjob.bin
 PRIVATE
 ${COMMON_LIBS}
 ${CMAKE_DL_LIBS})
 
-add_executable(printjob_svr_bin
+add_executable(printjob_svr.bin
   printjob.c
   ${CMAKE_SOURCE_DIR}/src/lib/Libcmds/cmds_common.c
 )
-target_include_directories(printjob_svr_bin
+target_include_directories(printjob_svr.bin
   PRIVATE
   ${COMMON_INCLUDES}
   ${CMAKE_SOURCE_DIR}/src/lib/Libdb/pgsql
   ${CMAKE_BINARY_DIR}/src/lib/Libattr
   ${PostgreSQL_INCLUDE_DIRS}
 )
-target_compile_definitions(printjob_svr_bin PRIVATE PRINTJOBSVR)
-target_link_libraries(printjob_svr_bin
+target_compile_definitions(printjob_svr.bin PRIVATE PRINTJOBSVR)
+target_link_libraries(printjob_svr.bin
   PRIVATE
   ${PostgreSQL_LIBRARIES}
   ${CMAKE_BINARY_DIR}/src/lib/Libdb/pgsql/libdb.so
@@ -218,3 +218,28 @@ add_executable(rstester
 )
 target_include_directories(rstester PRIVATE ${COMMON_INCLUDES})
 target_link_libraries(rstester PRIVATE ${COMMON_LIBS} ${CMAKE_DL_LIBS})
+
+add_executable(tracejob
+  tracejob.c
+  tracejob.h
+  ${CMAKE_SOURCE_DIR}/src/lib/Libcmds/cmds_common.c
+)
+target_include_directories(tracejob PRIVATE ${COMMON_INCLUDES})
+target_link_libraries(tracejob PRIVATE ${COMMON_LIBS} ${CMAKE_DL_LIBS})
+
+install(TARGETS
+  pbs_hostn
+  pbs_python
+  pbs_tclsh
+  pbs_wish
+  printjob.bin
+  printjob_svr.bin
+  tracejob
+  pbs_sleep
+DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(TARGETS
+  pbs_ds_monitor
+  pbs_idled
+  pbs_probe
+  pbs_upgrade_job
+DESTINATION ${CMAKE_INSTALL_SBINDIR})
