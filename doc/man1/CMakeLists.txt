@@ -1,0 +1,36 @@
+install(FILES
+  pbsdsh.1B
+  pbs_login.1B
+  pbs_python.1B
+  pbs_ralter.1B
+  pbs_rdel.1B
+  pbs_release_nodes.1B
+  pbs_rstat.1B
+  pbs_rsub.1B
+  qalter.1B
+  qdel.1B
+  qhold.1B
+  qmove.1B
+  qmsg.1B
+  qorder.1B
+  qrerun.1B
+  qrls.1B
+  qselect.1B
+  qsig.1B
+  qstat.1B
+  qsub.1B
+  DESTINATION ${CMAKE_INSTALL_MANDIR}/man1
+)
+install(FILES
+  pbs_hook_attributes.7B
+  pbs_job_attributes.7B
+  pbs_module.7B
+  pbs_node_attributes.7B
+  pbs_professional.7B
+  pbs_queue_attributes.7B
+  pbs_resources.7B
+  pbs_resv_attributes.7B
+  pbs_sched_attributes.7B
+  pbs_server_attributes.7B
+  DESTINATION ${CMAKE_INSTALL_MANDIR}/man7
+)

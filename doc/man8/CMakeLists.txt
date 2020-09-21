@@ -1,0 +1,44 @@
+install(FILES
+  mpiexec.8B
+	pbs.8B
+	pbs_account.8B
+	pbs_attach.8B
+	pbs_comm.8B
+	pbs.conf.8B
+	pbs_dataservice.8B
+	pbs_ds_password.8B
+	pbsfs.8B
+	pbs_hostn.8B
+	pbs_idled.8B
+	pbs_iff.8B
+	pbs_interactive.8B
+	pbs_lamboot.8B
+	pbs_mkdirs.8B
+	pbs_mom.8B
+	pbs_mpihp.8B
+	pbs_mpilam.8B
+	pbs_mpirun.8B
+	pbsnodes.8B
+	pbs_probe.8B
+	pbsrun.8B
+	pbsrun_unwrap.8B
+	pbsrun_wrap.8B
+	pbs_sched.8B
+	pbs_server.8B
+	pbs_snapshot.8B
+	pbs_tclsh.8B
+	pbs_tmrsh.8B
+	pbs_topologyinfo.8B
+	pbs_wish.8B
+	printjob.8B
+	qdisable.8B
+	qenable.8B
+	qmgr.8B
+	qrun.8B
+	qstart.8B
+	qstop.8B
+	qterm.8B
+	tracejob.8B
+  win_postinstall.py.8B
+  DESTINATION ${CMAKE_INSTALL_MANDIR}/man8
+)

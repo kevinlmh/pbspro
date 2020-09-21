@@ -86,3 +86,4 @@ set(CMAKE_INSTALL_PREFIX /opt/pbs)
 
 # add the src subdirectory
 add_subdirectory(src)
+add_subdirectory(doc)

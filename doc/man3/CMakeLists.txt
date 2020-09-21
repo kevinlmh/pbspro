@@ -1,0 +1,46 @@
+install(FILES
+  pbs_alterjob.3B
+  pbs_asyrunjob.3B
+  pbs_confirmresv.3B
+  pbs_connect.3B
+  pbs_default.3B
+  pbs_deljob.3B
+  pbs_delresv.3B
+  pbs_disconnect.3B
+  pbs_geterrmsg.3B
+  pbs_holdjob.3B
+  pbs_locjob.3B
+  pbs_manager.3B
+  pbs_modify_resv.3B
+  pbs_movejob.3B
+  pbs_msgjob.3B
+  pbs_orderjob.3B
+  pbs_preempt_jobs.3B
+  pbs_rerunjob.3B
+  pbs_rescreserve.3B
+  pbs_relnodesjob.3B
+  pbs_rlsjob.3B
+  pbs_runjob.3B
+  pbs_selectjob.3B
+  pbs_selstat.3B
+  pbs_sigjob.3B
+  pbs_stagein.3B
+  pbs_statfree.3B
+  pbs_stathook.3B
+  pbs_stathost.3B
+  pbs_statjob.3B
+  pbs_statnode.3B
+  pbs_statque.3B
+  pbs_statresv.3B
+  pbs_statrsc.3B
+  pbs_statsched.3B
+  pbs_statserver.3B
+  pbs_statvnode.3B
+  pbs_submit.3B
+  pbs_submit_resv.3B
+  pbs_tclapi.3B
+  pbs_terminate.3B
+  rm.3B
+  tm.3
+  DESTINATION ${CMAKE_INSTALL_MANDIR}/man3
+)
