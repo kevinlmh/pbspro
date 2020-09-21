@@ -15,6 +15,8 @@ gen_ecl_attrdef_file(resv_attr_def)
 gen_ecl_attrdef_file(sched_attr_def)
 gen_ecl_attrdef_file(svr_attr_def)
 
+configure_file(pbs.pc.in pbs.pc)
+
 set(LIBPBS_SOURCES
 	${CMAKE_SOURCE_DIR}/src/lib/Libattr/attr_fn_arst.c
 	${CMAKE_SOURCE_DIR}/src/lib/Libattr/attr_fn_b.c
@@ -258,3 +260,4 @@ target_include_directories(pbs_static
 )
 
 install(TARGETS pbs pbs_static DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/pbs.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)

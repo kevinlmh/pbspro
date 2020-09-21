@@ -19,3 +19,10 @@ target_link_libraries(db
 )
 # need to link to libpbs and libnet
 install(TARGETS db DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(PROGRAMS
+  pbs_db_utility
+  pbs_db_env
+  pbs_db_schema.sql
+  pbs_schema_upgrade
+  DESTINATION ${CMAKE_INSTALL_LIBEXECDIR}
+)

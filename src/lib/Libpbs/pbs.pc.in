@@ -35,14 +35,14 @@
 # "OpenPBS®", "PBS Professional®", and "PBS Pro™" and Altair's logos is
 # subject to Altair's trademark licensing policies.
 
-prefix=@prefix@
-exec_prefix=@exec_prefix@
-libdir=@libdir@
-includedir=@includedir@
+prefix=@CMAKE_INSTALL_PREFIX@
+exec_prefix=${prefix}
+libdir=${prefix}/@CMAKE_INSTALL_LIBDIR@
+includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@
 
-Name: @PACKAGE_NAME@
+Name: @PROJECT_NAME@
 Description: Library for the PBS
-Version: @PACKAGE_VERSION@
+Version: @PROJECT_VERSION@
 Libs: -L${libdir} -lpbs
 Cflags: -I${includedir}
 Requires.private: libcrypto
