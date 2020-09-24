@@ -50,7 +50,7 @@
 
 [Unit]
 Documentation=man:pbs(8)
-SourcePath=@prefix@/libexec/pbs_init.d
+SourcePath=@CMAKE_INSTALL_PREFIX@/libexec/pbs_init.d
 Description=Portable Batch System
 After=network-online.target remote-fs.target nss-lookup.target
 Wants=network-online.target
@@ -64,8 +64,8 @@ TimeoutStopSec=5min
 Delegate=yes
 IgnoreSIGPIPE=no
 GuessMainPID=no
-ExecStart=@prefix@/libexec/pbs_init.d start
-ExecStop=@prefix@/libexec/pbs_init.d stop
+ExecStart=@CMAKE_INSTALL_PREFIX@/libexec/pbs_init.d start
+ExecStop=@CMAKE_INSTALL_PREFIX@/libexec/pbs_init.d stop
 TasksMax=infinity
 
 [Install]

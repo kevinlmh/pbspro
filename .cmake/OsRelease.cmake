@@ -1,4 +1,4 @@
-if(EXISTS /etc/os-release1)
+if(EXISTS /etc/os-release)
 	file(STRINGS /etc/os-release vars)
 	foreach(var ${vars})
 		if(var MATCHES "^ID=(.*)")

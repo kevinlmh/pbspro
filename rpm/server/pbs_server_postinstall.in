@@ -57,20 +57,6 @@ is_cray_xt() {
 	return 1
 }
 
-poe_interactive() {
-	#Check if poe will allow interactive jobs
-	if [ -f /etc/poe.limits ]; then
-		. /etc/poe.limits
-		if [ -z "$MP_POE_LAUNCH" ]; then
-			echo "*** WARNING: MP_POE_LAUNCH unset may not allow jobs to run correctly"
-		elif [ "$MP_POE_LAUNCH" = "none" -o \
-				"$MP_POE_LAUNCH" = "ip" ]; then
-			echo "*** WARNING: MP_POE_LAUNCH=$MP_POE_LAUNCH may not allow jobs to run correctly"
-		fi
-	fi
-	return 0
-}
-
 createdir() {
 	if [ -n "$1" -a ! -d "$1" ]; then
 		if ! mkdir -p "$1"; then
@@ -88,8 +74,6 @@ createpath() {
 		createdir "${PBS_HOME}/${dir}" $mode
 	done
 }
-
-
 
 create_conf() {
 	# If we have an existing /etc/pbs.conf, save the old PBS_EXEC from
@@ -616,7 +600,8 @@ create_home() {
 
 }
 
-echo "*** PBS Installation Summary"
+# Start of script
+echo "*** PBS Server Installation Summary"
 echo "***"
 echo "*** Postinstall script called as follows:"
 printf "*** $0 "; printf "%q " "$@"; printf "\n"
@@ -641,72 +626,23 @@ fi
 newconf=${oldconfdir}/pbs.conf.${PBS_VERSION}
 
 INSTALL_METHOD="rpm"
-case "$1" in
-server)
-	INSTALL_PACKAGE=$1
-	PBS_VERSION="${2:-@PBS_VERSION@}"
-	newpbs_exec="${3:-@prefix@}"
-	newpbs_home="${4:-@PBS_SERVER_HOME@}"
-	dbuser="${preset_dbuser:-${5:-@database_user@}}"
-	if [ "$6" = "sameconf" ]; then
-		sameconf="true"
-	else
-		sameconf="false"
-	fi
-	serviceuser="${preset_serviceuser:-${7:-@service_user@}}"
-	if [ ! -x "$newpbs_exec/sbin/pbs_server" ]; then
-		echo "***"
-		echo "*** Unable to locate PBS executables!"
-		echo "***"
-		exit 1
-	fi
-	;;
-execution)
-	INSTALL_PACKAGE=$1
-	PBS_VERSION="${2:-@PBS_VERSION@}"
-	newpbs_exec="${3:-@prefix@}"
-	newpbs_home="${4:-@PBS_SERVER_HOME@}"
-	if [ "$5" = "sameconf" ]; then
-		sameconf="true"
-	else
-		sameconf="false"
-	fi
-	if [ ! -x "$newpbs_exec/sbin/pbs_mom" ]; then
-		echo "***"
-		echo "*** Unable to locate PBS executables!"
-		echo "***"
-		exit 1
-	fi
-	;;
-client)
-	INSTALL_PACKAGE=$1
-	PBS_VERSION="${2:-@PBS_VERSION@}"
-	newpbs_exec="${3:-@prefix@}"
-	newpbs_home='@PBS_SERVER_HOME@'
-	if [ "$4" = "sameconf" ]; then
-		sameconf="true"
-	else
-		sameconf="false"
-	fi
-	if [ ! -x "$newpbs_exec/bin/qstat" ]; then
-		echo "***"
-		echo "*** Unable to locate PBS executables!"
-		echo "***"
-		exit 1
-	fi
-	;;
-*)
-	INSTALL_METHOD="script"
+INSTALL_PACKAGE=$1
+PBS_VERSION="${2:-@PBS_VERSION@}"
+newpbs_exec="${3:-@prefix@}"
+newpbs_home="${4:-@PBS_SERVER_HOME@}"
+dbuser="${preset_dbuser:-${5:-@database_user@}}"
+if [ "$6" = "sameconf" ]; then
+	sameconf="true"
+else
 	sameconf="false"
-	if [ -f "$newconf" ]; then
-		newpbs_exec=`grep '^[[:space:]]*PBS_EXEC=' "$newconf" | tail -1 | sed 's/^[[:space:]]*PBS_EXEC=\([^[:space:]]*\)[[:space:]]*/\1/'`
-		newpbs_home=`grep '^[[:space:]]*PBS_HOME=' "$newconf" | tail -1 | sed 's/^[[:space:]]*PBS_HOME=\([^[:space:]]*\)[[:space:]]*/\1/'`
-	else
-		newpbs_exec=@prefix@
-		newpbs_home=@PBS_SERVER_HOME@
-	fi
-	;;
-esac
+fi
+serviceuser="${preset_serviceuser:-${7:-@service_user@}}"
+if [ ! -x "$newpbs_exec/sbin/pbs_server" ]; then
+	echo "***"
+	echo "*** Unable to locate PBS executables!"
+	echo "***"
+	exit 1
+fi
 
 # Ensure newpbs_exec exists.
 if [ ! -d "$newpbs_exec" ]; then
