@@ -101,3 +101,11 @@ target_link_libraries(pbsfs PRIVATE ${COMMON_LIBS})
 
 install(TARGETS sched DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(TARGETS pbs_sched pbsfs DESTINATION ${CMAKE_INSTALL_SBINDIR})
+install(PROGRAMS
+  pbs_dedicated
+  pbs_holidays
+  pbs_holidays.2017
+  pbs_resource_group
+  pbs_sched_config
+  DESTINATION ${CMAKE_INSTALL_SYSCONFDIR}
+)
