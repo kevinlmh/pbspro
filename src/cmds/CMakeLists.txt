@@ -73,32 +73,31 @@ target_include_directories(pbs_demux
 target_link_libraries(pbs_demux ${COMMON_LIBS})
 
 # CMAKETODO: undefined reference to get_hostaddress
-# add_executable(pbs_dataservice pbs_dataservice.c ${COMMON_SOURCES})
-# target_include_directories(pbs_dataservice
-#   PRIVATE
-#     ${CMAKE_SOURCE_DIR}/src/include
-#     ${CMAKE_BINARY_DIR}/src/include
-#     ${PostgreSQL_INCLUDE_DIRS})
-# target_link_libraries(pbs_dataservice
-#   ${COMMON_LIBS}
-#   ${PostgreSQL_LIBRARIES}
-#   ${CMAKE_BINARY_DIR}/src/lib/Libdb/pgsql/libdb.so
-#   OpenSSL::SSL
-#   OpenSSL::Crypto)
+add_executable(pbs_dataservice.bin pbs_dataservice.c ${COMMON_SOURCES})
+target_include_directories(pbs_dataservice.bin
+  PRIVATE
+    ${CMAKE_SOURCE_DIR}/src/include
+    ${CMAKE_BINARY_DIR}/src/include
+    ${PostgreSQL_INCLUDE_DIRS})
+target_link_libraries(pbs_dataservice.bin
+  ${CMAKE_BINARY_DIR}/src/lib/Libdb/pgsql/libdb.so
+  ${COMMON_LIBS}
+  ${PostgreSQL_LIBRARIES}
+  OpenSSL::SSL
+  OpenSSL::Crypto)
 
-# add_executable(pbs_ds_password pbs_ds_password.c ${COMMON_SOURCES})
-# target_include_directories(pbs_ds_password
-#   PRIVATE
-#     ${CMAKE_SOURCE_DIR}/src/include
-#     ${CMAKE_BINARY_DIR}/src/include
-#     ${PostgreSQL_INCLUDE_DIRS})
-# target_link_libraries(pbs_ds_password
-#   ${COMMON_LIBS}
-#   ${PostgreSQL_LIBRARIES}
-#   ${CMAKE_BINARY_DIR}/src/lib/Libdb/pgsql/libdb.so
-#   OpenSSL::SSL
-#   OpenSSL::Crypto)
-
+add_executable(pbs_ds_password.bin pbs_ds_password.c ${COMMON_SOURCES})
+target_include_directories(pbs_ds_password.bin
+  PRIVATE
+    ${CMAKE_SOURCE_DIR}/src/include
+    ${CMAKE_BINARY_DIR}/src/include
+    ${PostgreSQL_INCLUDE_DIRS})
+target_link_libraries(pbs_ds_password.bin
+  ${CMAKE_BINARY_DIR}/src/lib/Libdb/pgsql/libdb.so
+  ${COMMON_LIBS}
+  ${PostgreSQL_LIBRARIES}
+  OpenSSL::SSL
+  OpenSSL::Crypto)
 
 # dist bin programs
 # these do not need to compile, only configure and install
@@ -143,11 +142,11 @@ install(TARGETS
   qsub
   qterm
 DESTINATION ${CMAKE_INSTALL_BINDIR})
-# install(TARGETS 
-#   pbs_dataservice.bin
-#   pbs_ds_password.bin
-#   pbs_demux
-# DESTINATION sbin)
+install(TARGETS 
+  pbs_dataservice.bin
+  pbs_ds_password.bin
+  pbs_demux
+  DESTINATION ${CMAKE_INSTALL_SBINDIR})
 install(PROGRAMS
   ${CMAKE_CURRENT_BINARY_DIR}/mpiexec
   ${CMAKE_CURRENT_BINARY_DIR}/nqs2pbs
