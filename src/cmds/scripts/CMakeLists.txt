@@ -42,7 +42,8 @@ install(PROGRAMS
 install(PROGRAMS
   pbs.csh
   pbs.sh
-  DESTINATION ${CMAKE_INSTALL_SYSCONFDIR}/profile.d # /etc/profile.d 
+  # DESTINATION ${CMAKE_INSTALL_SYSCONFDIR}/profile.d # /etc/profile.d
+  DESTINATION ${CMAKE_INSTALL_SYSCONFDIR}
 )
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/pbs.service

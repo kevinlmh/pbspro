@@ -96,68 +96,30 @@ create_conf() {
 	fi
 	oldpbs_exec=`readlink -f "$oldpbs_exec"`
 
-	case $INSTALL_METHOD in
-	rpm)
-		[ -f "$newconf" ] && newconf="${newconf}.`date +%Y%m%d%H%M%S`"
-		# If an existing configuration file is present, adapt it.
-		declare -a env_array=("PBS_HOME" "PBS_SERVER" "PBS_MOM_HOME" "PBS_PRIMARY" "PBS_SECONDARY" "PBS_LEAF_ROUTERS" "PBS_DAEMON_SERVICE_USER")
-		if [ -f "$conf" ]; then
-			eval "sed 's;\(^[[:space:]]*PBS_EXEC=\)[^[:space:]]*;\1$newpbs_exec;' \"$conf\" >$newconf"
-			update_pbs_conf() {
-				unset env_var env_value
-				env_var=$1;
-				env_value=$(eval echo \$$env_var)
-				grep -q "^[[:space:]]*$env_var=[^[:space:]]*" "$newconf" \
-					&& sed -i "s;\(^[[:space:]]*${env_var}=\)[^[:space:]]*;\1${env_value};" "$newconf" \
-					|| echo "$env_var=${env_value}" >>"$newconf"
-			}
-			for var in "${env_array[@]}"
-			do
-				[ "${!var:+set}" ] && update_pbs_conf ${var}
-			done
-		else
-			[ ${newpbs_exec:+set} ] && echo "PBS_EXEC=$newpbs_exec" >"$newconf"
-			for var in "${env_array[@]}"
-			do
-				[ "${!var:+set}" ] && echo "${var}=${!var}" >>"$newconf"
-			done
-		fi
-		;;
-
-	script)
-		# Need to set INSTALL_PACKAGE for script method.
-		if [ -f "$newpbs_exec/sbin/pbs_server.bin" ]; then
-			INSTALL_PACKAGE=server
-		elif [ -f "$newpbs_exec/sbin/pbs_mom" ]; then
-			INSTALL_PACKAGE=execution
-		elif [ -f "$newpbs_exec/bin/qstat" ]; then
-			INSTALL_PACKAGE=client
-			newpbs_home=''
-		else
-			echo "***"
-			echo "*** Unable to locate PBS executables!"
-			echo "***"
-			exit 1
-		fi
-		# if both conf files are present merge the files but precedence should be given to newconf
-		if [ -f "$newconf" -a -f "$conf" ]; then
-			while IFS='=' read -r key value; do
-				if [ -z `grep -q "$key" "$newconf" && echo $?` ]; then
-					echo "$key=$value" >> "$newconf"
-				fi
-			done < "$conf"
-		fi
-		# The INSTALL script may have already created newconf. If it
-		# did, leave it alone. If not, and an existing configuration
-		# file is present, adapt it by substituting the new value
-		# of PBS_EXEC.
-		if [ ! -f "$newconf" -a -f "$conf" ]; then
-			# If an existing configuration file is present, adapt it by
-			# substituting the new value of PBS_EXEC.
-			eval "sed 's;\(^[[:space:]]*PBS_EXEC=\)[^[:space:]]*;\1$newpbs_exec;' \"$conf\"" >"$newconf"
-		fi
-		;;
-	esac
+	[ -f "$newconf" ] && newconf="${newconf}.`date +%Y%m%d%H%M%S`"
+	# If an existing configuration file is present, adapt it.
+	declare -a env_array=("PBS_HOME" "PBS_SERVER" "PBS_MOM_HOME" "PBS_PRIMARY" "PBS_SECONDARY" "PBS_LEAF_ROUTERS" "PBS_DAEMON_SERVICE_USER")
+	if [ -f "$conf" ]; then
+		eval "sed 's;\(^[[:space:]]*PBS_EXEC=\)[^[:space:]]*;\1$newpbs_exec;' \"$conf\" >$newconf"
+		update_pbs_conf() {
+			unset env_var env_value
+			env_var=$1;
+			env_value=$(eval echo \$$env_var)
+			grep -q "^[[:space:]]*$env_var=[^[:space:]]*" "$newconf" \
+				&& sed -i "s;\(^[[:space:]]*${env_var}=\)[^[:space:]]*;\1${env_value};" "$newconf" \
+				|| echo "$env_var=${env_value}" >>"$newconf"
+		}
+		for var in "${env_array[@]}"
+		do
+			[ "${!var:+set}" ] && update_pbs_conf ${var}
+		done
+	else
+		[ ${newpbs_exec:+set} ] && echo "PBS_EXEC=$newpbs_exec" >"$newconf"
+		for var in "${env_array[@]}"
+		do
+			[ "${!var:+set}" ] && echo "${var}=${!var}" >>"$newconf"
+		done
+	fi
 
 	# Ensure newconf exists.
 	touch "$newconf"
@@ -177,38 +139,14 @@ create_conf() {
 		[ -z "$PBS_START_COMM" ] && echo "PBS_START_COMM=0" >>"$newconf"
 		[ -z "$PBS_START_MOM" ] && echo "PBS_START_MOM=0" >>"$newconf"
 	else
-		case $INSTALL_PACKAGE in
-		server)
-			if [ -z "$PBS_SERVER" ]; then
-				PBS_SERVER=`hostname | awk -F. '{print $1}'`
-				echo "PBS_SERVER=$PBS_SERVER" >>"$newconf"
-			fi
-			[ -z "$PBS_START_SERVER" ] && echo "PBS_START_SERVER=1" >>"$newconf"
-			[ -z "$PBS_START_SCHED" ] && echo "PBS_START_SCHED=1" >>"$newconf"
-			[ -z "$PBS_START_COMM" ] && echo "PBS_START_COMM=1" >>"$newconf"
-			[ -z "$PBS_START_MOM" ] && echo "PBS_START_MOM=0" >>"$newconf"
-			;;
-		execution)
-			if [ -z "$PBS_SERVER" ]; then
-				PBS_SERVER='CHANGE_THIS_TO_PBS_SERVER_HOSTNAME'
-				echo "PBS_SERVER=$PBS_SERVER" >>"$newconf"
-			fi
-			[ -z "$PBS_START_SERVER" ] && echo "PBS_START_SERVER=0" >>"$newconf"
-			[ -z "$PBS_START_SCHED" ] && echo "PBS_START_SCHED=0" >>"$newconf"
-			[ -z "$PBS_START_COMM" ] && echo "PBS_START_COMM=0" >>"$newconf"
-			[ -z "$PBS_START_MOM" ] && echo "PBS_START_MOM=1" >>"$newconf"
-			;;
-		client)
-			if [ -z "$PBS_SERVER" ]; then
-				PBS_SERVER='CHANGE_THIS_TO_PBS_SERVER_HOSTNAME'
-				echo "PBS_SERVER=$PBS_SERVER" >>"$newconf"
-			fi
-			[ -z "$PBS_START_SERVER" ] && echo "PBS_START_SERVER=0" >>"$newconf"
-			[ -z "$PBS_START_SCHED" ] && echo "PBS_START_SCHED=0" >>"$newconf"
-			[ -z "$PBS_START_COMM" ] && echo "PBS_START_COMM=0" >>"$newconf"
-			[ -z "$PBS_START_MOM" ] && echo "PBS_START_MOM=0" >>"$newconf"
-			;;
-		esac
+		if [ -z "$PBS_SERVER" ]; then
+			PBS_SERVER=`hostname | awk -F. '{print $1}'`
+			echo "PBS_SERVER=$PBS_SERVER" >>"$newconf"
+		fi
+		[ -z "$PBS_START_SERVER" ] && echo "PBS_START_SERVER=1" >>"$newconf"
+		[ -z "$PBS_START_SCHED" ] && echo "PBS_START_SCHED=1" >>"$newconf"
+		[ -z "$PBS_START_COMM" ] && echo "PBS_START_COMM=1" >>"$newconf"
+		[ -z "$PBS_START_MOM" ] && echo "PBS_START_MOM=0" >>"$newconf"
 	fi
 
 	[ -z "$PBS_EXEC" ] && echo "PBS_EXEC=$newpbs_exec" >>"$newconf"
@@ -626,17 +564,17 @@ fi
 newconf=${oldconfdir}/pbs.conf.${PBS_VERSION}
 
 INSTALL_METHOD="rpm"
-INSTALL_PACKAGE=$1
-PBS_VERSION="${2:-@PBS_VERSION@}"
-newpbs_exec="${3:-@prefix@}"
-newpbs_home="${4:-@PBS_SERVER_HOME@}"
-dbuser="${preset_dbuser:-${5:-@database_user@}}"
+INSTALL_PACKAGE="server"
+PBS_VERSION="@PBS_VERSION@"
+newpbs_exec="@CPACK_PACKAGING_INSTALL_PREFIX@"
+newpbs_home="@PBS_HOME_DIR@"
+dbuser="${preset_dbuser:-${5:-@PBS_DATA_SERVICE_USER@}}"
 if [ "$6" = "sameconf" ]; then
 	sameconf="true"
 else
 	sameconf="false"
 fi
-serviceuser="${preset_serviceuser:-${7:-@service_user@}}"
+serviceuser="${preset_serviceuser:-${7:-@PBS_DATA_SERVICE_USER@}}"
 if [ ! -x "$newpbs_exec/sbin/pbs_server" ]; then
 	echo "***"
 	echo "*** Unable to locate PBS executables!"

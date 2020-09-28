@@ -60,7 +60,9 @@ set(TCL_ATRSEP "." CACHE STRING "Tcl attribute separator")
 # set(SENDMAIL_CMD /usr/sbin/sendmail CACHE STRING "Full path to the sendmail executable")
 set(XAUTH_BINARY xauth CACHE STRING "Name of the xauth executable")
 set(MIN_STACK_LIMIT 0x1000000 CACHE STRING "Mininum stack limit")
-set(CMAKE_INSTALL_PREFIX /opt/pbs CACHE STRING "PBS installation prefix")
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+  set(CMAKE_INSTALL_PREFIX "/opt/pbs" CACHE PATH "PBS installation prefix" FORCE)
+endif()
 
 
 if(NOT DISABLE_SHELL_PIPE)
@@ -100,6 +102,7 @@ endif()
 add_subdirectory(src)
 add_subdirectory(doc)
 
+
 include(InstallRequiredSystemLibraries)
 
 # packaging stuff
@@ -117,9 +120,9 @@ set(CPACK_PACKAGING_INSTALL_PREFIX "/opt/pbs") # or optionally, set CPACK_SET_DE
 set(CPACK_GENERATOR "RPM;DEB")
 
 # RPM package specific variables
-set(CPACK_RPM_POST_INSTALL_SCRIPT_FILE ${CMAKE_BINARY_DIR}/src/cmds/scripts/pbs_postinstall)
-set(CPACK_RPM_POST_TRANS_SCRIPT_FILE ${CMAKE_SOURCE_DIR}/src/cmds/scripts/pbs_posttrans)
-set(CPACK_RPM_PRE_UNINSTALL_SCRIPT_FILE ${CMAKE_SOURCE_DIR}/src/cmds/scripts/pbs_preuninstall)
+set(CPACK_RPM_POST_INSTALL_SCRIPT_FILE ${CMAKE_BINARY_DIR}/rpm/server/pbs_server_postinstall)
+# set(CPACK_RPM_POST_TRANS_SCRIPT_FILE ${CMAKE_SOURCE_DIR}/src/cmds/scripts/pbs_posttrans)
+# set(CPACK_RPM_PRE_UNINSTALL_SCRIPT_FILE ${CMAKE_SOURCE_DIR}/src/cmds/scripts/pbs_preuninstall)
 
 # DEB package specific variables 
 # deb package requires a maintainer and contact info
@@ -127,3 +130,5 @@ set(CPACK_DEBIAN_PACKAGE_MAINTAINER "PBS team")
 set(CPACK_PACKAGE_CONTACT "pbspro@altair.com")
 
 include(CPack)
+
+add_subdirectory(rpm)
