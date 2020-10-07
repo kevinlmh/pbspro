@@ -90,6 +90,10 @@ if(${ZLIB_FOUND})
 	set(PBS_COMPRESSION_ENABLED)
 endif()
 
+if(${Python3_FOUND})
+  set(PYTHON)
+endif()
+
 message(STATUS "OS Id: "  ${CMAKE_OS_ID} ", OS Version: " ${CMAKE_OS_VERSION_ID})
 if( (${CMAKE_OS_ID} STREQUAL suse AND ${CMAKE_OS_VERSION_ID} GREATER_EQUAL 1210) 
   OR (${CMAKE_OS_ID} STREQUAL rhel AND ${CMAKE_OS_VERSION_ID} GREATER_EQUAL 7)
@@ -132,8 +136,8 @@ set(CPACK_GENERATOR "RPM")
 
 # RPM package specific variables
 set(CPACK_RPM_POST_INSTALL_SCRIPT_FILE ${CMAKE_BINARY_DIR}/rpm/server/pbs_server_postinstall)
-set(CPACK_RPM_POST_TRANS_SCRIPT_FILE ${CMAKE_SOURCE_DIR}/rpm/server/pbs_server_posttrans)
-set(CPACK_RPM_PRE_UNINSTALL_SCRIPT_FILE ${CMAKE_SOURCE_DIR}/rpm/server/pbs_server_preuninstall)
+set(CPACK_RPM_POST_TRANS_SCRIPT_FILE ${CMAKE_BINARY_DIR}/rpm/server/pbs_server_posttrans)
+set(CPACK_RPM_PRE_UNINSTALL_SCRIPT_FILE ${CMAKE_BINARY_DIR}/rpm/server/pbs_server_preuninstall)
 
 # DEB package specific variables 
 # deb package requires a maintainer and contact info

@@ -1,2 +1,3 @@
-
 configure_file(pbs_server_postinstall.in pbs_server_postinstall @ONLY)
+configure_file(pbs_server_posttrans.in pbs_server_posttrans @ONLY)
+configure_file(pbs_server_preuninstall.in pbs_server_preuninstall @ONLY)
