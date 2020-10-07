@@ -444,29 +444,33 @@ pbs_dataservice_control(char *cmd, char *pbs_ds_host, int pbs_ds_port)
 
 	if (!(strcmp(cmd, PBS_DB_CONTROL_START))) {
 		/* Protect self from Linux OOM killer */
-		if (access(oom_score_adj, F_OK) != -1) {
-			strcpy(oom_file, oom_score_adj);
-			oom_val = strdup("-1000");
-		} else if (access(oom_adj, F_OK) != -1) {
-			strcpy(oom_file, oom_adj);
-			oom_val = strdup("-17");
-		}
-		if (oom_val != NULL) {
-			if ((fd = open(oom_file, O_TRUNC | O_WRONLY, 0600)) == -1) {
-				if (errmsg_cache)
-					free(errmsg_cache);
-				errmsg_cache = strdup("OOM protect: file open failed");
-				return -1;
-			}
-			if (write(fd, oom_val, strlen(oom_val)) == -1) {
-				if (errmsg_cache)
-					free(errmsg_cache);
-				errmsg_cache = strdup("OOM protect: file write failed");
-				return -1;
-			}
-			free(oom_val);
-			close(fd);
-		}
+		/* mliu: I have to comment out this section for the demo, because
+		 * setting OOM score inside docker container is not allowed */
+		// if (access(oom_score_adj, F_OK) != -1) {
+		// 	strcpy(oom_file, oom_score_adj);
+		// 	oom_val = strdup("-1000");
+		// } else if (access(oom_adj, F_OK) != -1) {
+		// 	strcpy(oom_file, oom_adj);
+		// 	oom_val = strdup("-17");
+		// }
+		// if (oom_val != NULL) {
+		// 	if ((fd = open(oom_file, O_TRUNC | O_WRONLY, 0600)) == -1) {
+		// 		if (errmsg_cache)
+		// 			free(errmsg_cache);
+		// 		errmsg_cache = strdup("OOM protect: file open failed");
+		// 		fprintf(stderr, "## MLIU pbs_dataservice_control OOM protect: file open failed\n");
+		// 		return -1;
+		// 	}
+		// 	if (write(fd, oom_val, strlen(oom_val)) == -1) {
+		// 		if (errmsg_cache)
+		// 			free(errmsg_cache);
+		// 		errmsg_cache = strdup("OOM protect: file write failed");
+		// 		fprintf(stderr, "## MLIU pbs_dataservice_control OOM protect: file write failed\n");
+		// 		return -1;
+		// 	}
+		// 	free(oom_val);
+		// 	close(fd);
+		// }
 		sprintf(errfile, "%s/spool/pbs_ds_monitor_errfile", pbs_conf.pbs_home_path);
 		/* launch monitoring program which will fork to background */
 		sprintf(dbcmd, "%s/sbin/pbs_ds_monitor monitor > %s 2>&1", pbs_conf.pbs_exec_path, errfile);
