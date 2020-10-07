@@ -68,8 +68,8 @@ if(${PBS_UNDOLR_ENABLED})
   list(APPEND EXTRA_LIBS ${UndoLR_LIBRARIES})
 endif()
 
-add_executable(pbs_server_bin ${SERVER_SOURCES})
-target_include_directories(pbs_server_bin
+add_executable(pbs_server.bin ${SERVER_SOURCES})
+target_include_directories(pbs_server.bin
   PRIVATE
     ${CMAKE_SOURCE_DIR}/src/include
     ${CMAKE_BINARY_DIR}/src/include
@@ -81,7 +81,7 @@ target_include_directories(pbs_server_bin
     ${CMAKE_BINARY_DIR}/src/lib/Libattr
     ${EXTRA_INCLUDES}
 )
-target_link_libraries(pbs_server_bin
+target_link_libraries(pbs_server.bin
   PRIVATE
   ${CMAKE_BINARY_DIR}/src/lib/Libtpp/libtpp.a
 	${CMAKE_BINARY_DIR}/src/lib/Libattr/libattr.a
@@ -109,7 +109,7 @@ target_link_libraries(pbs_server_bin
   # -Xlinker
   # -export-dynamic
 )
-target_compile_definitions(pbs_server_bin PRIVATE PYTHON)
+target_compile_definitions(pbs_server.bin PRIVATE PYTHON)
 
 add_executable(pbs_comm pbs_comm.c)
 target_include_directories(pbs_comm
@@ -130,4 +130,4 @@ target_link_libraries(pbs_comm
   ${EXTRA_LIBS}
   ${CMAKE_DL_LIBS} 
 )
-install(TARGETS pbs_server_bin pbs_comm DESTINATION ${CMAKE_INSTALL_SBINDIR})
+install(TARGETS pbs_server.bin pbs_comm DESTINATION ${CMAKE_INSTALL_SBINDIR})

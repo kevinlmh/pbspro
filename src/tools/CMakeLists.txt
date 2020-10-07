@@ -15,7 +15,6 @@ set(COMMON_LIBS
 
 add_executable(pbs_sleep pbs_sleep.c)
 target_include_directories(pbs_sleep PRIVATE ${COMMON_INCLUDES})
-# target_link_options(pbs_sleep PRIVATE -all-static) # not working
 
 add_executable(chk_tree chk_tree.c)
 target_include_directories(chk_tree PRIVATE ${COMMON_INCLUDES} ${ZLIB_INCLUDE_DIRS})
@@ -33,7 +32,6 @@ add_executable(pbs_ds_monitor
   ${CMAKE_SOURCE_DIR}/src/lib/Libcmds/cmds_common.c
 )
 target_include_directories(pbs_ds_monitor PRIVATE ${COMMON_INCLUDES})
-# target_link_options(pbs_ds_monitor PRIVATE -Wl,-rpath,${CMAKE_INSTALL_LIBDIR})
 target_link_libraries(pbs_ds_monitor
   ${CMAKE_BINARY_DIR}/src/lib/Libdb/pgsql/libdb.so
   ${COMMON_LIBS}

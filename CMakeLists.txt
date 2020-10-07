@@ -51,6 +51,7 @@ option(DEBUG "Enable build with -DDEBUG" OFF)
 set(PBS_HOME_DIR /var/spool/pbs CACHE STRING "PBS home directory")
 # FIXME: subst database_user
 set(PBS_DATA_SERVICE_USER postgres CACHE STRING "PBS database user")
+set(PBS_DAEMON_SERVICE_USER root CACHE STRING "PBS daemon service user")
 # FIXME: Do we need PBS_SERVER_FILE_NAME?
 set(PBS_DATA_SERVICE_PORT 15007 CACHE STRING "PBS database port")
 set(PBS_CONF_FILE /etc/pbs.conf CACHE STRING "PBS configuration file location")
@@ -63,6 +64,8 @@ set(MIN_STACK_LIMIT 0x1000000 CACHE STRING "Mininum stack limit")
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   set(CMAKE_INSTALL_PREFIX "/opt/pbs" CACHE PATH "PBS installation prefix" FORCE)
 endif()
+set(CMAKE_BUILD_RPATH ${CMAKE_INSTALL_LIBDIR})
+set(CMAKE_INSTALL_RPATH ${CMAKE_INSTALL_LIBDIR})
 
 
 if(NOT DISABLE_SHELL_PIPE)
@@ -88,6 +91,12 @@ if(${ZLIB_FOUND})
 endif()
 
 message(STATUS "OS Id: "  ${CMAKE_OS_ID} ", OS Version: " ${CMAKE_OS_VERSION_ID})
+if( (${CMAKE_OS_ID} STREQUAL suse AND ${CMAKE_OS_VERSION_ID} GREATER_EQUAL 1210) 
+  OR (${CMAKE_OS_ID} STREQUAL rhel AND ${CMAKE_OS_VERSION_ID} GREATER_EQUAL 7)
+  OR (${CMAKE_OS_ID} STREQUAL xdebian AND ${CMAKE_OS_VERSION_ID} GREATER_EQUAL 8)
+  OR (${CMAKE_OS_ID} STREQUAL xubuntu AND ${CMAKE_OS_VERSION_ID} GREATER_EQUAL 16))
+  set(HAVE_SYSTEMD 1)
+endif()
 if(${CMAKE_OS_ID} STREQUAL ubuntu OR ${CMAKE_OS_ID} STREQUAL debian)
 	set(SYSTEMD_UNIT_DIR /lib/systemd/system)
 else()
@@ -98,11 +107,6 @@ endif()
 #   # cmake_compile_flags(-DDEBUG) set globally
 # endif()
 
-# add the src subdirectory
-add_subdirectory(src)
-add_subdirectory(doc)
-
-
 include(InstallRequiredSystemLibraries)
 
 # packaging stuff
@@ -112,23 +116,34 @@ set(CPACK_PACKAGE_VERSION_MINOR "${PBS_MINOR_VERSION}")
 set(CPACK_PACKAGE_VERSION_PATCH "${PBS_PATCH_VERSION}")
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
 set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
-set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
+set(CPACK_PACKAGE_DESCRIPTION "OpenPBS descriotion")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Summary placeholder")
 set(CPACK_PACKAGE_HOMEPAGE_URL "https://www.openpbs.org")
 
 set(CPACK_PACKAGING_INSTALL_PREFIX "/opt/pbs") # or optionally, set CPACK_SET_DESTDIR to ON
-set(CPACK_GENERATOR "RPM;DEB")
+set(CPACK_GENERATOR "RPM")
+
+# src package specific variables
+# CPACK_SOURCE_PACKAGE_FILE_NAME
+# CPACK_SOURCE_STRIP_FILES
+# CPACK_SOURCE_GENERATOR
+# CPACK_SOURCE_OUTPUT_CONFIG_FILEError initializing the PBS dataservice
+# CPACK_SOURCE_IGNORE_FILES
 
 # RPM package specific variables
 set(CPACK_RPM_POST_INSTALL_SCRIPT_FILE ${CMAKE_BINARY_DIR}/rpm/server/pbs_server_postinstall)
-# set(CPACK_RPM_POST_TRANS_SCRIPT_FILE ${CMAKE_SOURCE_DIR}/src/cmds/scripts/pbs_posttrans)
-# set(CPACK_RPM_PRE_UNINSTALL_SCRIPT_FILE ${CMAKE_SOURCE_DIR}/src/cmds/scripts/pbs_preuninstall)
+set(CPACK_RPM_POST_TRANS_SCRIPT_FILE ${CMAKE_SOURCE_DIR}/rpm/server/pbs_server_posttrans)
+set(CPACK_RPM_PRE_UNINSTALL_SCRIPT_FILE ${CMAKE_SOURCE_DIR}/rpm/server/pbs_server_preuninstall)
 
 # DEB package specific variables 
 # deb package requires a maintainer and contact info
-set(CPACK_DEBIAN_PACKAGE_MAINTAINER "PBS team")
-set(CPACK_PACKAGE_CONTACT "pbspro@altair.com")
+# set(CPACK_DEBIAN_PACKAGE_MAINTAINER "PBS team")
+# set(CPACK_PACKAGE_CONTACT "pbspro@altair.com")
+
+# add the src subdirectory
+add_subdirectory(src)
+add_subdirectory(doc)
+add_subdirectory(rpm)
+
 
 include(CPack)
-
-add_subdirectory(rpm)

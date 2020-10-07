@@ -49,7 +49,7 @@ UPGRADE_DB="upgrade_db"
 
 get_db_user() {
 	[ -f "${dbuser_fl}" ] && dbuser_name=`cat "${dbuser_fl}" | tr -d '[:space:]'`
-	[ -z "${dbuser_name}" ] && dbuser_name="${PBS_DATA_SERVICE_USER:-@database_user@}"
+	[ -z "${dbuser_name}" ] && dbuser_name="${PBS_DATA_SERVICE_USER:-@PBS_DATA_SERVICE_USER@}"
 	if [ ! -f "${dbuser_fl}" ]; then
 		printf "%s" "$dbuser_name" >"${dbuser_fl}"
 		chmod 0600 "${dbuser_fl}"
@@ -279,7 +279,7 @@ if [ "${PBS_START_SERVER:-0}" != 0 ] ; then
 	export PBS_DATA_SERVICE_USER
 
 	server_started=0
-	PBS_DATA_SERVICE_PORT=${PBS_DATA_SERVICE_PORT:-"@database_port@"}
+	PBS_DATA_SERVICE_PORT=${PBS_DATA_SERVICE_PORT:-"@PBS_DATA_SERVICE_PORT@"}
 	export PBS_DATA_SERVICE_PORT
 
 	create_new_svr_data=1

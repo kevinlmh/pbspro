@@ -26,3 +26,7 @@ install(PROGRAMS
   pbs_schema_upgrade
   DESTINATION ${CMAKE_INSTALL_LIBEXECDIR}
 )
+install(PROGRAMS
+  pbs_ds_systemd
+  DESTINATION ${CMAKE_INSTALL_SBINDIR}
+)

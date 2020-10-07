@@ -497,7 +497,7 @@ create_home() {
 		# create the database user file if it does not exist
 		dbuser_fl="${PBS_HOME}/server_priv/db_user"
 		if [ ! -f "${dbuser_fl}" ]; then
-			printf "${dbuser:-@database_user@}" >"${dbuser_fl}"
+			printf "${dbuser:-@PBS_DATA_SERVICE_USER@}" >"${dbuser_fl}"
 			chmod 0600 "${dbuser_fl}"
 		fi
 	fi
@@ -645,15 +645,15 @@ case "$1" in
 server)
 	INSTALL_PACKAGE=$1
 	PBS_VERSION="${2:-@PBS_VERSION@}"
-	newpbs_exec="${3:-@prefix@}"
-	newpbs_home="${4:-@PBS_SERVER_HOME@}"
-	dbuser="${preset_dbuser:-${5:-@database_user@}}"
+	newpbs_exec="${3:-@CPACK_PACKAGING_INSTALL_PREFIX@}"
+	newpbs_home="${4:-@PBS_HOME_DIR@}"
+	dbuser="${preset_dbuser:-${5:-@PBS_DATA_SERVICE_USER@}}"
 	if [ "$6" = "sameconf" ]; then
 		sameconf="true"
 	else
 		sameconf="false"
 	fi
-	serviceuser="${preset_serviceuser:-${7:-@service_user@}}"
+	serviceuser="${preset_serviceuser:-${7:-@PBS_DAEMON_SERVICE_USER@}}"
 	if [ ! -x "$newpbs_exec/sbin/pbs_server" ]; then
 		echo "***"
 		echo "*** Unable to locate PBS executables!"
@@ -664,8 +664,8 @@ server)
 execution)
 	INSTALL_PACKAGE=$1
 	PBS_VERSION="${2:-@PBS_VERSION@}"
-	newpbs_exec="${3:-@prefix@}"
-	newpbs_home="${4:-@PBS_SERVER_HOME@}"
+	newpbs_exec="${3:-@CPACK_PACKAGING_INSTALL_PREFIX@}"
+	newpbs_home="${4:-@PBS_HOME_DIR@}"
 	if [ "$5" = "sameconf" ]; then
 		sameconf="true"
 	else
@@ -681,8 +681,8 @@ execution)
 client)
 	INSTALL_PACKAGE=$1
 	PBS_VERSION="${2:-@PBS_VERSION@}"
-	newpbs_exec="${3:-@prefix@}"
-	newpbs_home='@PBS_SERVER_HOME@'
+	newpbs_exec="${3:-@CPACK_PACKAGING_INSTALL_PREFIX@}"
+	newpbs_home="@PBS_HOME_DIR@"
 	if [ "$4" = "sameconf" ]; then
 		sameconf="true"
 	else
@@ -702,8 +702,8 @@ client)
 		newpbs_exec=`grep '^[[:space:]]*PBS_EXEC=' "$newconf" | tail -1 | sed 's/^[[:space:]]*PBS_EXEC=\([^[:space:]]*\)[[:space:]]*/\1/'`
 		newpbs_home=`grep '^[[:space:]]*PBS_HOME=' "$newconf" | tail -1 | sed 's/^[[:space:]]*PBS_HOME=\([^[:space:]]*\)[[:space:]]*/\1/'`
 	else
-		newpbs_exec=@prefix@
-		newpbs_home=@PBS_SERVER_HOME@
+		newpbs_exec=@CPACK_PACKAGING_INSTALL_PREFIX@
+		newpbs_home=@PBS_HOME_DIR@
 	fi
 	;;
 esac
