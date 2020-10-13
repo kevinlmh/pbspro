@@ -364,7 +364,7 @@ pbs_install_db () {
 		fi
 		bin_dir=`dirname $initdb_loc`
 	fi
-
+	echo "### MLIU pbs data service user = ${PBS_DATA_SERVICE_USER}"
 	user="${PBS_DATA_SERVICE_USER}"
 	port="${PBS_DATA_SERVICE_PORT}"
 

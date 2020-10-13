@@ -112,10 +112,13 @@ main(int argc, char *argv[])
 
 	if (strcmp(sopt, PBS_DB_CONTROL_START) == 0) {
 		rc = pbs_start_db(conn_db_host, pbs_conf.pbs_data_service_port);
+		fprintf(stderr, "## MLIU dataservice.bin constrol start rc=%d\n", rc);
 	} else if (strcmp(sopt, PBS_DB_CONTROL_STOP) == 0) {
 		rc = pbs_stop_db(conn_db_host, pbs_conf.pbs_data_service_port);
+		fprintf(stderr, "## MLIU dataservice.bin constrol stop rc=%d\n", rc);
 	} else if (strcmp(sopt, PBS_DB_CONTROL_STATUS) == 0) {
 		rc = pbs_status_db(conn_db_host, pbs_conf.pbs_data_service_port);
+		fprintf(stderr, "## MLIU dataservice.bin constrol status rc=%d\n", rc);
 		if (rc) {
 			pbs_db_get_errmsg(PBS_DB_ERR, &errmsg);
 			if (errmsg) {
@@ -127,5 +130,6 @@ main(int argc, char *argv[])
 		fprintf(stderr, "\nusage: %s -s [start|stop|status]\n", prog);
 		return -1;
 	}
+	fprintf(stderr, "## MLIU dataservice.bin return rc=%d\n", rc);
 	return (rc);
 }

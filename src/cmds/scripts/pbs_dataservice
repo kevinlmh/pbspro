@@ -205,7 +205,7 @@ case "$1" in
 			ret=$?
 
 			if [ ${ret} -ne 0 ]; then
-				echo "Failed to start PBS Data Service"
+				echo "## MLIU Failed to start PBS Data Service, ret=${ret}"
 				if [ ${ret} -eq ${version_mismatch} ]; then
 					echo "PBS database needs to be upgraded."
 					echo "Consult the documentation/release notes for details."
