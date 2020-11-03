@@ -58,19 +58,30 @@ extern "C" {
 #cmakedefine PBS_HAVE_EPOLL
 #cmakedefine PBS_HAVE_EPOLL_PWAIT
 #cmakedefine PBS_HAVE_PPOLL
-#cmakedefine LIBICAL_API2
-#cmakedefine PBS_UNDOLR_ENABLED
-#cmakedefine PBS_COMPRESSION_ENABLED
-#cmakedefine SYSLOG
-#cmakedefine PYTHON
-
 #cmakedefine HAVE_GETPWUID
 #cmakedefine HAVE_INITGROUPS
 #cmakedefine HAVE_SETEUID
 #cmakedefine HAVE_SETEGID
 #cmakedefine HAVE_SETRESUID
 #cmakedefine HAVE_SETRESGID
+#cmakedefine01 HAVE_SYSTEMD
+#cmakedefine01 SYSLOG
+#cmakedefine DISABLE_SYSLOG
+#cmakedefine UndoLR_FOUND
+#cmakedefine ZLIB_FOUND
+#cmakedefine Python3_FOUND
 
+#ifdef UndoLR_FOUND
+#define PBS_UNDOLR_ENABLED
+#endif
+#ifdef ZLIB_FOUND
+#define PBS_COMPRESSION_ENABLED
+#endif
+#ifdef Python3_FOUND
+#define PYTHON
+#define PYTHON_BIN_PATH "@Python3_EXECUTABLE@"
+
+#endif
 
 #ifndef HAVE_SOCKLEN_T
 #define pbs_socklen_t int
@@ -92,7 +103,13 @@ extern "C" {
 #define XAUTH_BINARY "@XAUTH_BINARY@"
 #define SENDMAIL_CMD "@SENDMAIL_CMD@"
 #define TCL_ATRSEP "@TCL_ATRSEP@"
+// #define HAVE_SYSTEMD "@HAVE_SYSTEMD@"
 #define SYSTEMD_UNIT_DIR "@SYSTEMD_UNIT_DIR@"
+#define Ical_VERSION_MAJOR @Ical_VERSION_MAJOR@
+
+#if (Ical_VERSION_MAJOR > 2)
+#define LIBICAL_API2
+#endif
 
 #ifdef __cplusplus
 }

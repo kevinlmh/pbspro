@@ -67,7 +67,6 @@ endif()
 set(CMAKE_BUILD_RPATH ${CMAKE_INSTALL_LIBDIR})
 set(CMAKE_INSTALL_RPATH ${CMAKE_INSTALL_LIBDIR})
 
-
 if(NOT DISABLE_SHELL_PIPE)
 	set(SHELL_INVOKE 1)
 else()
@@ -75,23 +74,9 @@ else()
 endif()
 
 if(NOT DISABLE_SYSLOG)
-	set(SYSLOG)
-endif()
-
-if(${Ical_VERSION_MAJOR} GREATER 1)
-	set(LIBICAL_API2)
-endif()
-
-if(${UndoLR_FOUND})
-	set(PBS_UNDOLR_ENABLED)
-endif()
-
-if(${ZLIB_FOUND})
-	set(PBS_COMPRESSION_ENABLED)
-endif()
-
-if(${Python3_FOUND})
-  set(PYTHON)
+	set(SYSLOG 1)
+else()
+	set(SYSLOG 0)
 endif()
 
 message(STATUS "OS Id: "  ${CMAKE_OS_ID} ", OS Version: " ${CMAKE_OS_VERSION_ID})
@@ -102,9 +87,9 @@ if( (${CMAKE_OS_ID} STREQUAL suse AND ${CMAKE_OS_VERSION_ID} GREATER_EQUAL 1210)
   set(HAVE_SYSTEMD 1)
 endif()
 if(${CMAKE_OS_ID} STREQUAL ubuntu OR ${CMAKE_OS_ID} STREQUAL debian)
-	set(SYSTEMD_UNIT_DIR /lib/systemd/system)
+	set(SYSTEMD_UNIT_DIR "/lib/systemd/system" CACHE PATH "Systemd unit directory")
 else()
-	set(SYSTEMD_UNIT_DIR /usr/lib/systemd/system)
+	set(SYSTEMD_UNIT_DIR "/usr/lib/systemd/system" CACHE PATH "Systemd unit directory")
 endif()
 
 # if(${DEBUG})
